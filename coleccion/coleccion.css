@@ -1,0 +1,85 @@
+/* La colección: listado y fichas de especies. Usa la paleta de comun/sitio.css. */
+.coleccion { padding-top: 22px; padding-bottom: 20px; }
+.rotulo { font-size: 12.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--verde); font-weight: 800; }
+.migas { margin: 0 0 14px; font-size: 15px; }
+.migas a { font-weight: 700; text-decoration: none; }
+.migas a:hover { text-decoration: underline; }
+
+/* ficha */
+.ficha { max-width: 760px; }
+.ficha .meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0 0 14px; }
+.pill { display: inline-block; font-size: 12.5px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; color: #fff;
+  background: var(--verde); border-radius: 999px; padding: 6px 13px 5px; line-height: 1.3; white-space: nowrap; }
+.pill.exotica { background: var(--naranja); color: var(--tinta); }
+.cabeza { display: grid; grid-template-columns: 1fr auto; gap: 10px 14px; align-items: end; }
+.ficha .familia { margin: 0 0 2px; }
+.ficha h1 { font-family: var(--fuente); font-weight: 800; font-size: clamp(38px, 11.5vw, 62px); line-height: 1.02; margin: 0;
+  color: var(--verde-profundo); letter-spacing: -.012em; overflow-wrap: break-word; }
+.cientifico { font-size: 21px; color: var(--cientifico); font-style: italic; font-weight: 600; margin: 8px 0 0; line-height: 1.3; }
+.cientifico .r, .lista .c .r { font-style: normal; }
+.tambien { margin: 4px 0 0; color: var(--tinta-suave); font-size: 15.5px; }
+.porte { margin: 0; width: 92px; text-align: center; }
+.porte svg { width: 92px; height: 92px; display: block; color: var(--silueta); }
+.porte figcaption { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--verde); font-weight: 800; margin-top: 2px; }
+.ficha hr { border: 0; border-top: 1.5px solid var(--linea); margin: 22px 0; }
+.bloque { display: grid; grid-template-columns: 46px 1fr; gap: 14px; margin: 0 0 22px; }
+.bloque svg { width: 46px; height: 46px; display: block; }
+.titulo-sec { font-family: var(--fuente); font-size: 13.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--verde-profundo);
+  font-weight: 800; margin: 6px 0 6px; }
+.bloque p { margin: 0; }
+.ficha .seccion-ficha { margin: 30px 0 0; }
+.estaciones { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+.est { position: relative; aspect-ratio: 1 / 1; border-radius: var(--radio); overflow: hidden; background: var(--papel); border: 1.5px dashed var(--linea);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--tinta-suave); text-decoration: none; text-align: center; padding: 8px; }
+.est svg { width: 34px; height: 34px; color: var(--silueta); }
+.est b { font-size: 12.5px; letter-spacing: .13em; text-transform: uppercase; margin-top: 6px; color: var(--verde); }
+.est small { font-size: 13px; }
+.est.foto-est { border: 0; padding: 0; background: var(--salvia); }
+.est.foto-est img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.est.foto-est b { position: absolute; left: 8px; bottom: 8px; margin: 0; background: rgba(51, 73, 10, .88); color: #fff; border-radius: 999px; padding: 3px 9px 2px; font-size: 11px; }
+.aviso-ficha { display: flex; gap: 12px; align-items: center; background: var(--papel); border: 1.5px dashed var(--linea); border-radius: var(--radio);
+  padding: 14px 16px; color: var(--tinta-suave); font-size: 15.5px; margin-top: 10px; line-height: 1.45; }
+.aviso-ficha svg { flex: 0 0 30px; width: 30px; height: 30px; color: var(--silueta); }
+.acciones { display: grid; gap: 10px; margin: 30px 0 0; }
+.acciones .boton { width: 100%; }
+.redes-ficha { text-align: center; margin: 12px 0 0; font-size: 15px; color: var(--tinta-suave); }
+.redes-ficha a { font-weight: 700; }
+.vecinos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 26px; }
+.vecinos a { display: block; text-decoration: none; background: var(--papel); border: 1.5px solid #E4E2CC; border-radius: var(--radio); padding: 10px 12px; color: var(--verde-profundo); line-height: 1.25; }
+.vecinos a span { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--verde); font-weight: 800; margin-bottom: 2px; }
+.vecinos a b { font-weight: 800; }
+.vecinos .sig { text-align: right; grid-column: 2; }
+
+/* listado */
+.intro-col h1 { margin-bottom: 6px; }
+.intro-col p { max-width: 38em; }
+.buscador { position: relative; margin: 20px 0 12px; max-width: 760px; }
+.buscador svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: var(--verde); pointer-events: none; }
+.buscador input { width: 100%; font: inherit; font-size: 17px; padding: 13px 14px 13px 44px; border: 1.5px solid var(--linea); border-radius: var(--radio); background: #fff; color: var(--tinta); }
+.buscador input::placeholder { color: #6F7756; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; max-width: 760px; }
+.chips .sep { width: 100%; height: 0; }
+.chip { font: inherit; font-size: 14.5px; font-weight: 700; border: 1.5px solid var(--linea); background: var(--papel); color: var(--verde-profundo); border-radius: 999px; padding: 7px 14px; cursor: pointer; line-height: 1.2; }
+.chip[aria-pressed="true"] { background: var(--verde); border-color: var(--verde); color: #fff; }
+.cuenta { margin: 16px 2px 8px; font-size: 14px; color: var(--tinta-suave); display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; max-width: 760px; }
+.leyenda .dot { margin: 0 3px 0 10px; }
+.lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; max-width: 760px; }
+.lista a { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; background: var(--papel); border: 1.5px solid #E4E2CC; border-radius: var(--radio); padding: 9px 12px; text-decoration: none; color: inherit; }
+.lista a:hover { border-color: var(--linea); background: #fff; }
+.lista svg { width: 44px; height: 44px; color: var(--silueta); display: block; }
+.lista .n { display: block; font-weight: 800; color: var(--verde-profundo); font-size: 17px; line-height: 1.2; }
+.lista .c { display: block; font-style: italic; color: var(--cientifico); font-size: 14.5px; line-height: 1.3; }
+.lista .cod { font-size: 12.5px; color: var(--verde); font-weight: 800; letter-spacing: .06em; text-align: right; white-space: nowrap; }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--verde); margin-left: 7px; vertical-align: 1px; }
+.dot.exotica { background: var(--naranja); }
+.vacio { background: var(--papel); border: 1.5px dashed var(--linea); border-radius: var(--radio); padding: 18px; color: var(--tinta-suave); text-align: center; }
+.mensaje { padding: 24px 0 10px; max-width: 760px; }
+.mensaje h1 { font-family: var(--fuente-titulo); font-weight: 400; }
+
+@media (min-width: 640px) {
+  .porte { width: 120px; } .porte svg { width: 120px; height: 120px; }
+  .estaciones { grid-template-columns: repeat(4, 1fr); }
+  .acciones { grid-template-columns: 1fr 1fr; }
+  .cientifico { font-size: 24px; }
+}
+@media print { .acciones, .vecinos, .redes-ficha, .migas { display: none; } }
