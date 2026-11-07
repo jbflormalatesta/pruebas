@@ -27,14 +27,32 @@
 .plano-svg .asiento { fill: var(--naranja); }
 .plano-svg #arboles circle { fill: var(--cientifico); }
 .plano-svg #arboles circle.ejemplar, .plano-svg .aqui .ejemplar { fill: var(--naranja); stroke: var(--tinta); stroke-width: .14; }
-.plano-svg #accesos rect { fill: var(--tinta); }
+
+/* afuera del alambrado (aproximado): calles, veredas y edificio principal */
+.plano-svg #entorno .calle { fill: var(--salvia); stroke: var(--silueta); stroke-width: .12; }
+.plano-svg #entorno .eje { stroke: var(--papel); stroke-width: .22; stroke-dasharray: 1.4 1.1; }
+.plano-svg #entorno .cemento { fill: var(--papel); stroke: var(--linea); stroke-width: .08; }
+.plano-svg #entorno .vereda { fill: var(--crema); }
+.plano-svg #entorno .plantas circle { fill: var(--verde-claro); }
+.plano-svg #entorno .interna { fill: var(--papel); stroke: var(--tinta-suave); stroke-width: .1; stroke-dasharray: .6 .45; }
+.plano-svg #entorno .edificio { fill: var(--tinta-suave); }
+.plano-svg #entorno text { font-family: var(--fuente); font-weight: 800; text-anchor: middle; }
+.plano-svg #entorno .rot-calle { font-size: 1.5px; fill: var(--tinta-suave); letter-spacing: .04em; }
+.plano-svg #entorno .rot-vereda { font-size: 1.2px; fill: var(--cientifico); paint-order: stroke; stroke: var(--crema); stroke-width: .45; }
+.plano-svg #entorno .rot-interna { font-size: 1.15px; fill: var(--tinta-suave); }
+.plano-svg #entorno .rot-edificio { font-size: 1.3px; fill: var(--crema); }
+.plano-svg #entorno .rot-chico { font-size: 1.1px; fill: var(--tinta-suave); }
+.plano-svg #entorno .norte circle { fill: var(--papel); stroke: var(--linea); stroke-width: .15; }
+.plano-svg #entorno .norte path { fill: var(--verde-profundo); }
+.plano-svg #entorno .norte text { font-size: 1.5px; fill: var(--verde-profundo); }
 
 /* cuadrícula de ayuda (columnas 1–56, filas 1–68 de abajo hacia arriba, como en el relevamiento) */
 .plano-svg #cuadricula { display: none; }
 .plano-marco.con-cuadricula #cuadricula { display: inline; }
 .plano-svg #cuadricula line { stroke: var(--verde-profundo); stroke-width: .03; opacity: .4; }
 .plano-svg #cuadricula line.cinco { stroke-width: .08; opacity: .55; }
-.plano-svg #cuadricula text { font: 800 1.15px var(--fuente); fill: var(--tinta-suave); text-anchor: middle; }
+.plano-svg #cuadricula text { font: 800 1.15px var(--fuente); fill: var(--tinta-suave); text-anchor: middle;
+  paint-order: stroke; stroke: var(--papel); stroke-width: .4; stroke-linejoin: round; }
 .plano-svg #toque rect { fill: var(--naranja); fill-opacity: .35; stroke: var(--tinta); stroke-width: .12; }
 
 .plano-svg .escala line { stroke: var(--tinta); stroke-width: .2; }
@@ -44,10 +62,15 @@
 .plano-svg .marca circle, .plano-svg .marca rect { stroke: var(--papel); stroke-width: .28; }
 .plano-svg .marca.sector circle { fill: var(--verde); }
 .plano-svg .marca.servicio circle { fill: var(--naranja); }
+.plano-svg .marca { cursor: pointer; }
 .plano-svg .marca.acceso rect { fill: var(--tinta); }
+.plano-svg .marca .flecha { fill: none; stroke: #fff; stroke-width: .28; stroke-linecap: round; stroke-linejoin: round; }
+.plano-svg .marca.puerta rect { fill: var(--tinta); stroke-width: .18; }
+.plano-svg .marca.referencia rect { fill: var(--produccion); }
 .plano-svg .marca.panel rect { fill: var(--verde-profundo); }
 .plano-svg .marca .num { font: 800 1.6px var(--fuente); fill: #fff; text-anchor: middle; }
 .plano-svg .marca.servicio .num { font-size: 1.1px; fill: var(--tinta); }
+.plano-svg .marca.referencia .num { font-size: 1.35px; fill: var(--tinta); }
 .plano-svg .marca .gota { fill: var(--tinta); }
 .plano-svg .rotulo { font: 800 1.4px var(--fuente); fill: var(--tinta); paint-order: stroke; stroke: var(--papel);
   stroke-width: .5; stroke-linejoin: round; }
@@ -81,6 +104,19 @@
 .sw.sector { background: var(--verde); color: #fff; font-size: 12px; }
 .sw.servicio { background: var(--naranja); color: var(--tinta); font-size: 9px; }
 
+.leyenda h3 { font-size: 15px; letter-spacing: .1em; text-transform: uppercase; color: var(--verde); margin: 14px 0 8px; }
+.leyenda h3:first-of-type { margin-top: 4px; }
+.leyenda li small { display: block; font-size: 13.5px; color: var(--tinta-suave); }
+.leyenda a { color: var(--verde-profundo); font-weight: 800; text-decoration: none; }
+.leyenda a:hover span:last-child { text-decoration: underline; }
+.leyenda li a { display: flex; align-items: center; gap: 10px; }
+.sw.ref { flex-basis: 22px; height: 22px; border-radius: 5px; margin: 0 2px; background: var(--produccion); color: var(--tinta); font-size: 12px; }
+.sw.agua { flex-basis: 22px; height: 22px; border-radius: 50%; margin: 0 2px; background: var(--naranja); }
+.sw.agua svg { width: 12px; height: 12px; fill: var(--tinta); }
+.sw.puerta { flex-basis: 8px; height: 16px; border-radius: 3px; margin: 0 9px; background: var(--tinta); }
+.sw.acceso2 { flex-basis: 22px; height: 22px; border-radius: 5px; margin: 0 2px; background: var(--tinta); }
+.sw.acceso2 svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.sw.calle { background: var(--salvia); border: 1.5px solid var(--silueta); }
 .en-plano { margin: 12px 0 0; font-weight: 800; }
 .tarjeta p.en-plano { color: var(--tinta-suave); }
 

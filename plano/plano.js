@@ -1,6 +1,6 @@
 /*
- * Plano del Jardín: marcas de sectores, servicios y accesos, «Estás acá», ejemplares de la
- * colección, cuadrícula de ayuda y ampliación. Los lugares se editan en datos/plano.js.
+ * Plano del Jardín: marcas de sectores, servicios, accesos y referencias, «Estás acá», ejemplares
+ * de la colección, cuadrícula de ayuda y ampliación. Los lugares se editan en datos/plano.js.
  */
 (function () {
   'use strict';
@@ -30,6 +30,11 @@
     var m = String(c).trim().match(/^([a-z])\s*-?\s*(\d{1,2})$/i);
     return m ? m[1].toUpperCase() + '-' + (m[2].length < 2 ? '0' + m[2] : m[2]) : String(c).trim();
   }
+  function descripcion(l) {
+    var n = l.tipo === 'sector' ? l.nombre + ' (sector ' + parseInt(l.codigo.slice(2), 10) + ')' : l.nombre;
+    return l.nota ? n + ' · ' + l.nota : n;
+  }
+  var GOTA = 'c.62.72.6 1.2.6 1.44a.6.6 0 0 1-1.2 0c0-.24-.02-.72.6-1.44z';
 
   // ---- marcas de los lugares ubicados ----
   var porCodigo = {};
@@ -38,23 +43,35 @@
     if (!ubicado(l) || l.tipo === 'totem') return;
     var x = cx(l.col), y = cy(l.fila);
     var g = nodo('g', { 'class': 'marca ' + l.tipo, id: 'm-' + l.codigo }, marcas);
-    nodo('title', {}, g).textContent = l.nombre;
+    nodo('title', {}, g).textContent = descripcion(l);
     if (l.tipo === 'sector') {
       nodo('circle', { cx: x, cy: y, r: 1.5 }, g);
       texto(String(parseInt(l.codigo.slice(2), 10)), { x: x, y: y + 0.56, 'class': 'num' }, g);
+    } else if (l.tipo === 'referencia') {
+      nodo('rect', { x: x - 1.05, y: y - 1.05, width: 2.1, height: 2.1, rx: 0.4 }, g);
+      texto(l.letra || '·', { x: x, y: y + 0.42, 'class': 'num' }, g);
     } else if (l.tipo === 'servicio') {
-      nodo('circle', { cx: x, cy: y, r: 1.35 }, g);
-      if (l.codigo === 'agua') {
-        nodo('path', { 'class': 'gota', d: 'M' + x + ',' + (y - 0.85) + 'c.65.75.62 1.25.62 1.5a.62.62 0 0 1-1.24 0c0-.25-.03-.75.62-1.5z' }, g);
-      } else {
-        texto(l.codigo === 'banos' ? 'WC' : 'i', { x: x, y: y + 0.42, 'class': 'num' }, g);
-      }
-    } else {
-      nodo('rect', { x: x - 1.15, y: y - 1.15, width: 2.3, height: 2.3, rx: 0.45 }, g);
-      texto(l.tipo === 'panel' ? 'P' : '↗', { x: x, y: y + 0.52, 'class': 'num' }, g);
+      nodo('circle', { cx: x, cy: y, r: l.icono === 'agua' ? 1.05 : 1.35 }, g);
+      if (l.icono === 'agua') nodo('path', { 'class': 'gota', d: 'M' + x + ',' + (y - 0.8) + GOTA }, g);
+      else texto(l.icono === 'banos' ? 'WC' : 'i', { x: x, y: y + 0.42, 'class': 'num' }, g);
+    } else if (l.tipo === 'puerta') {
+      nodo('rect', { x: x - 0.55, y: y - 0.9, width: 1.1, height: 1.8, rx: 0.3 }, g);
+    } else if (l.tipo === 'acceso') {
+      nodo('rect', { x: x - 1.1, y: y - 1.1, width: 2.2, height: 2.2, rx: 0.45 }, g);
+      // flecha hacia adentro: desde la izquierda o de arriba, hacia abajo; desde la derecha, hacia la izquierda
+      var giro = l.col >= COLS ? 180 : 90;
+      nodo('path', { 'class': 'flecha', d: 'M-.65,0H.45M.05-.45L.55,0L.05.45', transform: 'translate(' + x + ' ' + y + ') rotate(' + giro + ')' }, g);
+    } else { // panel
+      nodo('rect', { x: x - 1.1, y: y - 1.1, width: 2.2, height: 2.2, rx: 0.45 }, g);
+      texto('P', { x: x, y: y + 0.52, 'class': 'num' }, g);
     }
-    var izquierda = x > 36;
-    texto(l.nombre, { x: izquierda ? x - 2.1 : x + 2.1, y: y + 0.48, 'class': 'rotulo' + (izquierda ? ' izq' : '') }, g);
+    if (l.rotulo) {
+      var lineas = [].concat(l.rotulo), izq = l.col <= 0;
+      lineas.forEach(function (t, k) {
+        texto(t, { x: izq ? x - 1.7 : x + 1.7, y: y + 0.1 + (k - (lineas.length - 1) / 2) * 1.35, 'class': 'rotulo' + (izq ? ' izq' : '') }, g);
+      });
+    }
+    g.addEventListener('click', function () { destacar(l.codigo, false); });
   });
 
   // ---- en cada tarjeta: «Ver en el plano» o «Muy pronto» ----
@@ -69,9 +86,15 @@
       a.addEventListener('click', function (ev) { ev.preventDefault(); destacar(c, true); });
       p.appendChild(a);
     } else {
-      p.textContent = 'Muy pronto, en el plano.';
+      p.textContent = porCodigo[c] && porCodigo[c].tipo === 'panel' ? 'Panel en preparación.' : 'Muy pronto, en el plano.';
     }
     tarjeta.insertBefore(p, tarjeta.querySelector('.botones'));
+  });
+  // referencias de sectores: destacan en el plano sin saltar a la tarjeta
+  Array.prototype.forEach.call(document.querySelectorAll('[data-destacar]'), function (a) {
+    a.addEventListener('click', function (ev) {
+      if (destacar(a.getAttribute('data-destacar'), true)) ev.preventDefault();
+    });
   });
 
   // ---- destacar un lugar o los ejemplares de una especie ----
@@ -100,7 +123,7 @@
       texto('Estás acá', { x: px + w / 2, y: py + 1.62 }, p);
       decir('Estás acá: ' + l.nombre + '.');
     } else {
-      decir(l.nombre + ', marcado en el plano.');
+      decir(descripcion(l) + '.');
     }
     if (desplazar) mostrarPlano();
     return true;
