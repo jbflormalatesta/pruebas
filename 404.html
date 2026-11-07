@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Página no encontrada · Jardín Botánico Municipal Florencio Malatesta</title>
+<script>
+/* Si alguien escribe la dirección sin «?» (…/A-71, …/S-01, …/acceso), lo lleva igual a su página.
+   Cualquier otra dirección inexistente vuelve a la portada del sitio. Funciona en la raíz del dominio
+   y dentro de una carpeta (…/pruebas/, …/jardinbotanico/). */
+(function () {
+  var seg = location.pathname.split('/').filter(Boolean);
+  var ult = seg.length ? decodeURIComponent(seg[seg.length - 1]) : '';
+  var base = '/' + seg.slice(0, -1).join('/') + (seg.length > 1 ? '/' : '');
+  var m = ult.match(/^([a-z])\s*-?\s*(\d{1,2})$/i);
+  if (m) {
+    location.replace(base + '?' + m[1].toUpperCase() + '-' + (m[2].length < 2 ? '0' + m[2] : m[2]));
+  } else if (/^acceso$/i.test(ult)) {
+    location.replace(base + '?acceso');
+  } else {
+    location.replace('/' + (seg.length > 1 ? seg[0] + '/' : ''));
+  }
+})();
+</script>
+<style>
+  body { margin: 0; font-family: "Nunito Sans", system-ui, sans-serif; background: #F6F1E1; color: #2A331A; }
+  div { max-width: 36rem; margin: 0 auto; padding: 48px 20px; }
+  a { color: #456301; font-weight: 700; }
+</style>
+</head>
+<body>
+<div>
+  <p>Esta página no existe. <a href="/">Ir al sitio del Jardín Botánico Municipal «Florencio Malatesta»</a>.</p>
+</div>
+</body>
+</html>
