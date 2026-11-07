@@ -49,6 +49,14 @@ window.SITIO = {
     cuando: "Se hace el segundo sábado de cada mes.",
   },
 
+  // AGENDA (página «Agenda» y «Próximas actividades» de la portada)
+  //   Las actividades se cargan en el calendario «JB - Público» de Google, no acá.
+  //   datos: la dirección de la aplicación web que lee ese calendario (termina en /exec).
+  //   Mientras esté vacía, la agenda muestra un mensaje con el enlace a Instagram.
+  agenda: {
+    datos: "",
+  },
+
   // A dónde lleva el QR impreso en las fichas A5 (D2) de la colección:
   //   "ficha"    = la página de la especie (igual que las etiquetas)
   //   "linktree" = el Linktree del Jardín
