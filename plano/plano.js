@@ -54,6 +54,15 @@
       nodo('circle', { cx: x, cy: y, r: l.icono === 'agua' ? 1.05 : 1.35 }, g);
       if (l.icono === 'agua') nodo('path', { 'class': 'gota', d: 'M' + x + ',' + (y - 0.8) + GOTA }, g);
       else texto(l.icono === 'banos' ? 'WC' : 'i', { x: x, y: y + 0.42, 'class': 'num' }, g);
+    } else if (l.tipo === 'parada') {
+      nodo('circle', { cx: x, cy: y, r: 1.35 }, g);
+      nodo('path', { 'class': 'bus', 'fill-rule': 'evenodd', d: 'M' + (x - 0.75) + ',' + (y - 0.85) +
+        'h1.5a.25.25 0 0 1 .25.25v1.15a.2.2 0 0 1-.2.2h-.1v.3h-.38v-.3h-.64v.3h-.38v-.3h-.1a.2.2 0 0 1-.2-.2v-1.15a.25.25 0 0 1 .25-.25z' +
+        'M' + (x - 0.6) + ',' + (y - 0.6) + 'h1.2v.55h-1.2z' }, g);
+    } else if (l.tipo === 'cruce') {
+      nodo('rect', { x: x - 1.1, y: y - 1.1, width: 2.2, height: 2.2, rx: 0.4 }, g);
+      nodo('path', { 'class': 'cruz', d: 'M' + (x - 0.6) + ',' + (y - 0.6) + 'L' + (x + 0.6) + ',' + (y + 0.6) +
+        'M' + (x + 0.6) + ',' + (y - 0.6) + 'L' + (x - 0.6) + ',' + (y + 0.6) }, g);
     } else if (l.tipo === 'puerta') {
       nodo('rect', { x: x - 0.55, y: y - 0.9, width: 1.1, height: 1.8, rx: 0.3 }, g);
     } else if (l.tipo === 'acceso') {
@@ -66,9 +75,10 @@
       texto('P', { x: x, y: y + 0.52, 'class': 'num' }, g);
     }
     if (l.rotulo) {
-      var lineas = [].concat(l.rotulo), izq = l.col <= 0;
+      var lineas = [].concat(l.rotulo), izq = l.rotuloLado ? l.rotuloLado === 'izq' : l.col <= 0;
       lineas.forEach(function (t, k) {
-        texto(t, { x: izq ? x - 1.7 : x + 1.7, y: y + 0.1 + (k - (lineas.length - 1) / 2) * 1.35, 'class': 'rotulo' + (izq ? ' izq' : '') }, g);
+        texto(t, { x: izq ? x - 1.7 : x + 1.7, y: y + 0.45 + (k - (lineas.length - 1) / 2) * 1.35,
+          'class': 'rotulo' + (izq ? ' izq' : '') + (l.tipo === 'cruce' ? ' claro' : '') }, g);
       });
     }
     g.addEventListener('click', function () { destacar(l.codigo, false); });

@@ -29,17 +29,22 @@
 .plano-svg #arboles circle.ejemplar, .plano-svg .aqui .ejemplar { fill: var(--naranja); stroke: var(--tinta); stroke-width: .14; }
 
 /* afuera del alambrado (aproximado): calles, veredas y edificio principal */
-.plano-svg #entorno .calle { fill: var(--salvia); stroke: var(--silueta); stroke-width: .12; }
-.plano-svg #entorno .eje { stroke: var(--papel); stroke-width: .22; stroke-dasharray: 1.4 1.1; }
+.plano-svg #entorno .ruta { fill: var(--tinta-suave); }
+.plano-svg #entorno .borde-ruta { stroke: var(--crema); stroke-width: .14; opacity: .7; }
+.plano-svg #entorno .eje { stroke: var(--crema); stroke-width: .24; stroke-dasharray: 1.6 1.2; }
+.plano-svg #entorno .calle { fill: var(--salvia); stroke: var(--silueta); stroke-width: .14; }
 .plano-svg #entorno .cemento { fill: var(--papel); stroke: var(--linea); stroke-width: .08; }
 .plano-svg #entorno .vereda { fill: var(--crema); }
 .plano-svg #entorno .plantas circle { fill: var(--verde-claro); }
-.plano-svg #entorno .interna { fill: var(--papel); stroke: var(--tinta-suave); stroke-width: .1; stroke-dasharray: .6 .45; }
+.plano-svg #entorno .interna { fill: var(--tierra); }
+.plano-svg #entorno .interna-ripio { fill: url(#ripio); }
+.plano-svg #ripio circle { fill: var(--ripio); }
 .plano-svg #entorno .edificio { fill: var(--tinta-suave); }
 .plano-svg #entorno text { font-family: var(--fuente); font-weight: 800; text-anchor: middle; }
-.plano-svg #entorno .rot-calle { font-size: 1.5px; fill: var(--tinta-suave); letter-spacing: .04em; }
+.plano-svg #entorno .rot-ruta { font-size: 1.8px; fill: var(--crema); letter-spacing: .05em; paint-order: stroke; stroke: var(--tinta-suave); stroke-width: 1.1; stroke-linejoin: round; }
+.plano-svg #entorno .rot-calle { font-size: 1.35px; fill: var(--tinta-suave); letter-spacing: .03em; }
 .plano-svg #entorno .rot-vereda { font-size: 1.2px; fill: var(--cientifico); paint-order: stroke; stroke: var(--crema); stroke-width: .45; }
-.plano-svg #entorno .rot-interna { font-size: 1.15px; fill: var(--tinta-suave); }
+.plano-svg #entorno .rot-interna { font-size: 1.1px; fill: var(--tinta-suave); paint-order: stroke; stroke: var(--tierra); stroke-width: .35; }
 .plano-svg #entorno .rot-edificio { font-size: 1.3px; fill: var(--crema); }
 .plano-svg #entorno .rot-chico { font-size: 1.1px; fill: var(--tinta-suave); }
 .plano-svg #entorno .norte circle { fill: var(--papel); stroke: var(--linea); stroke-width: .15; }
@@ -67,6 +72,11 @@
 .plano-svg .marca .flecha { fill: none; stroke: #fff; stroke-width: .28; stroke-linecap: round; stroke-linejoin: round; }
 .plano-svg .marca.puerta rect { fill: var(--tinta); stroke-width: .18; }
 .plano-svg .marca.referencia rect { fill: var(--produccion); }
+.plano-svg .marca.parada circle { fill: var(--naranja); }
+.plano-svg .marca.parada .bus { fill: var(--tinta); }
+.plano-svg .marca.cruce rect { fill: var(--crema); stroke: var(--tinta); stroke-width: .2; }
+.plano-svg .marca.cruce .cruz { stroke: var(--rojo-ceibo); stroke-width: .38; stroke-linecap: round; }
+.plano-svg .rotulo.claro { fill: var(--crema); stroke: var(--tinta-suave); stroke-width: 1.1; }
 .plano-svg .marca.panel rect { fill: var(--verde-profundo); }
 .plano-svg .marca .num { font: 800 1.6px var(--fuente); fill: #fff; text-anchor: middle; }
 .plano-svg .marca.servicio .num { font-size: 1.1px; fill: var(--tinta); }
@@ -116,7 +126,13 @@
 .sw.puerta { flex-basis: 8px; height: 16px; border-radius: 3px; margin: 0 9px; background: var(--tinta); }
 .sw.acceso2 { flex-basis: 22px; height: 22px; border-radius: 5px; margin: 0 2px; background: var(--tinta); }
 .sw.acceso2 svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.sw.calle { background: var(--salvia); border: 1.5px solid var(--silueta); }
+.sw.ruta { height: 12px; background: var(--tinta-suave); }
+.sw.calle { height: 10px; background: var(--salvia); border: 1.5px solid var(--silueta); }
+.sw.interna { height: 10px; background: var(--tierra) radial-gradient(var(--ripio) 22%, transparent 26%) 0 0 / 5px 5px; }
+.sw.parada { flex-basis: 22px; height: 22px; border-radius: 50%; margin: 0 2px; background: var(--naranja); }
+.sw.parada svg { width: 13px; height: 13px; fill: var(--tinta); }
+.sw.cruce { flex-basis: 20px; height: 20px; margin: 0 3px; border-radius: 4px; background: var(--crema); border: 1.5px solid var(--tinta); }
+.sw.cruce svg { width: 12px; height: 12px; stroke: var(--rojo-ceibo); stroke-width: 2.6; stroke-linecap: round; }
 .en-plano { margin: 12px 0 0; font-weight: 800; }
 .tarjeta p.en-plano { color: var(--tinta-suave); }
 
