@@ -39,8 +39,10 @@ que puede convivir con el portal sin conflictos.
 | Ruta | Qué es |
 |---|---|
 | `index.html` | Portada. En `<head>` lleva el enrutador de los QR (ver 4). |
-| `visita/`, `plano/`, `coleccion/`, `centinelas/`, `el-jardin/` | Secciones (cada una con su `index.html`). |
+| `visita/`, `plano/`, `coleccion/`, `agenda/`, `centinelas/`, `recursos/`, `el-jardin/` | Secciones (cada una con su `index.html`). |
 | `comun/sitio.css`, `comun/sitio.js` | Estilos (paleta institucional) y comportamientos comunes. |
+| `comun/agenda.js` | Agenda de la portada y de `agenda/` (ver «Agenda» más abajo). |
+| `datos/recursos.js`, `recursos/archivos/` | Lista y archivos de la página «Recursos» (lo edita el Jardín). |
 | `datos/sitio.js` | Aviso, horarios, contactos y enlaces a formularios (lo edita el Jardín). |
 | `datos/especies.js` | Fichas de las 156 especies de la colección. |
 | `datos/direcciones.js` | Contrato de direcciones de los QR impresos. |
@@ -105,12 +107,22 @@ Así, `https://jbflormalatesta.github.io/?A-71` pasa a `…/jardinbotanico/?A-71
 sitio nuevo hace el resto. Conviene probar una muestra de códigos de cada tipo antes de dar de baja
 nada.
 
+### Agenda
+
+Las actividades salen del calendario «JB - Público» de Google a través de una aplicación web de
+Google Apps Script de la cuenta del Jardín (`2026-11_Script_AgendaWebJB`). Su dirección está en
+`datos/sitio.js` → `agenda.datos`. No depende del servidor: después de la migración sigue andando
+igual. Si el servidor aplica una política de seguridad de contenidos (CSP), hay que permitir
+`https://script.google.com` y `https://script.googleusercontent.com` en `connect-src` y `script-src`.
+
 ## 5. Qué edita el Jardín después de la migración
 
 - `datos/sitio.js`: aviso, horarios, contactos y enlaces.
 - `datos/especies.js`: textos de las fichas.
 - `datos/plano.js`: ubicaciones en el plano.
+- `datos/recursos.js` y `recursos/archivos/`: materiales para descargar.
 - `fotos/`: fotografías.
+- Las actividades de la agenda se cargan en el calendario «JB - Público», no en el sitio.
 
 Todo lo demás es estructura. Si el área de Sistemas prefiere integrar el contenido a su gestor de
 contenidos, los textos están en esos archivos de datos y en las páginas, sin dependencias ocultas.

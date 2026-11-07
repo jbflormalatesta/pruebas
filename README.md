@@ -19,6 +19,9 @@ repositorio es exactamente lo que se publica.
 | Corregir el texto de una especie | `datos/especies.js` | buscar el código, por ejemplo `"A-71"` |
 | Decidir adónde lleva el QR de las fichas A5 | `datos/sitio.js` | `qrFichas`: `"ficha"` o `"linktree"` |
 | Ubicar un sector, un servicio o un ejemplar en el plano | `datos/plano.js` | `col` y `fila` (las instrucciones están al principio del archivo) |
+| Que una actividad aparezca en la **Agenda** | calendario «JB - Público» de Google (no se toca el sitio) | título, día, hora y lugar. De la descripción solo se publican los renglones que empiezan con «Web:» |
+| Cambiar la dirección de la aplicación que lee el calendario | `datos/sitio.js` | `agenda.datos` |
+| Sumar un material para descargar en **Recursos** | `recursos/archivos/` y `datos/recursos.js` | subir el archivo y copiar un bloque (instrucciones al principio de `datos/recursos.js`) |
 | Subir fotos del sitio | `fotos/sitio/` | ver el README de esa carpeta |
 | Subir fotos de especies | `fotos/especies/` | `A-71-primavera.jpg`, etc. |
 
@@ -35,10 +38,12 @@ index.html            Portada (y enrutador de los QR impresos)
 visita/               Visitá el Jardín: horarios, cómo llegar, servicios, pautas, visitas guiadas
 plano/                Plano del Jardín: relevamiento de 2026, sectores, servicios y entradas (plano.js, plano.css)
 coleccion/            La colección: listado y fichas (coleccion.js, coleccion.css)
+agenda/               Agenda: actividades abiertas, del calendario «JB - Público» (comun/agenda.js)
 centinelas/           Programa Centinelas de Nativas
+recursos/             Recursos para descargar (recursos.js); los archivos van en recursos/archivos/
 el-jardin/            El Jardín: historia, misión, institucional, contacto
-comun/                sitio.css (estilos y paleta) y sitio.js (aviso, horarios, enlaces)
-datos/                sitio.js, especies.js, direcciones.js y plano.js
+comun/                sitio.css (estilos y paleta), sitio.js (aviso, horarios, enlaces) y agenda.js
+datos/                sitio.js, especies.js, direcciones.js, plano.js y recursos.js
 img/                  logos, íconos e imagen para compartir
 fotos/sitio/          fotos de las páginas
 fotos/especies/       fotos de las cuatro estaciones
