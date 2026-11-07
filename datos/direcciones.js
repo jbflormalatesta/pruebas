@@ -35,5 +35,9 @@ window.DIRECCIONES = {
     // C2 · Paneles interpretativos (700 × 500 mm)
     "P-01": { pieza: "C2 · Panel Mariposario nativo", destino: "visita/#P-01" },
     "P-02": { pieza: "C2 · Panel Centinelas de Nativas", destino: "./#centinelas" },
+
+    // B1 · Tótems direccionales (600 × 701 mm). En la etapa 2 pasan al plano del Jardín.
+    "T-01": { pieza: "B1 · Tótem direccional 1", destino: "visita/#sectores" },
+    "T-02": { pieza: "B1 · Tótem direccional 2", destino: "visita/#sectores" },
   },
 };
