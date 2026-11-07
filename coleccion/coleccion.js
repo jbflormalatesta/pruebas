@@ -81,9 +81,13 @@
     var est = ESTACIONES.map(function (s) {
       return '<div class="est" data-est="' + s[0] + '">' + ICO[s[0]] + '<b>' + s[1] + '</b><small>Próximamente</small></div>';
     }).join('');
-    var ubic = e.ubicacion === 'reservada'
+    var enPlano = window.PLANO && window.PLANO.ejemplares && window.PLANO.ejemplares[e.codigo];
+    var reservada = e.ubicacion === 'reservada';
+    var ubic = reservada
       ? 'Es una especie sensible a la recolección: por eso no publicamos dónde está.'
-      : 'Estamos armando el plano del Jardín. Muy pronto vas a ver acá dónde está este ejemplar.';
+      : (enPlano && enPlano.length ? 'Está marcada en el plano del Jardín.' : 'Muy pronto vas a ver acá dónde está este ejemplar.');
+    var ubicEnlace = reservada ? ''
+      : (enPlano && enPlano.length ? ' <a href="../plano/#' + esc(e.codigo) + '">Ver dónde está</a>' : ' <a href="../plano/">Ver el plano del Jardín</a>');
     var lista = visibles().filter(function (x) { return x.lote === e.lote; })
       .sort(function (a, b) { return a.codigo.localeCompare(b.codigo); });
     var i = -1;
@@ -104,7 +108,7 @@
       (porteSvg(e) ? '<figure class="porte">' + sinLectura(porteSvg(e)) + '<figcaption>' + esc(e.porte) + '</figcaption></figure>' : '') +
       '</div><hr>' + bloques +
       '<section class="seccion-ficha"><h2 class="titulo-sec">Las cuatro estaciones</h2><div class="estaciones">' + est + '</div></section>' +
-      '<section class="seccion-ficha"><h2 class="titulo-sec">Dónde está</h2><div class="aviso-ficha">' + ICO.mapa + '<span>' + esc(ubic) + '</span></div></section>' +
+      '<section class="seccion-ficha"><h2 class="titulo-sec">Dónde está</h2><div class="aviso-ficha">' + ICO.mapa + '<span>' + esc(ubic) + ubicEnlace + '</span></div></section>' +
       '<div class="acciones">' +
       '<a class="boton" href="' + esc(LINKTREE) + '" rel="noopener">Redes y novedades del Jardín ' + ICO.flecha + '</a>' +
       '<button class="boton sec" id="compartir" type="button" hidden>Compartir esta ficha</button>' +
