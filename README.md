@@ -56,6 +56,7 @@ navegación de **todas** las páginas.
 | `?S-01` … `?S-06` | C1 · Carteles de sector | El sector, en Visitá el Jardín |
 | `?P-01` | C2 · Panel Mariposario nativo | El panel, en Visitá el Jardín |
 | `?P-02` | C2 · Panel Centinelas de Nativas | Centinelas, en la portada |
+| `?T-01`, `?T-02` | B1 · Tótems direccionales | Los sectores, en Visitá el Jardín |
 
 Sectores: S-01 Talar bonaerense · S-02 Vivero de nativas · S-03 Huerta agroecológica · S-04 Estanque ·
 S-05 Aromáticas y medicinales · S-06 Compostera.

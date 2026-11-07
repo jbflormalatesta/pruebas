@@ -51,7 +51,7 @@ que puede convivir con el portal sin conflictos.
 ## 4. Contrato de direcciones: los QR impresos
 
 La cartelería impresa (312 piezas de la colección, más el cartel de acceso, los 6 carteles de sector y
-los 2 paneles) lleva QR que apuntan a **la portada con un código corto**:
+los 2 tótems direccionales y los 2 paneles) lleva QR que apuntan a **la portada con un código corto**:
 
 ```
 https://jbflormalatesta.github.io/?A-71      etiqueta de especie (D1)
@@ -59,6 +59,7 @@ https://jbflormalatesta.github.io/?A-71&f    ficha A5 de especie (D2)
 https://jbflormalatesta.github.io/?acceso    cartel de acceso
 https://jbflormalatesta.github.io/?S-01      cartel de sector (S-01 a S-06)
 https://jbflormalatesta.github.io/?P-01      panel interpretativo (P-01 y P-02)
+https://jbflormalatesta.github.io/?T-01      tótem direccional (T-01 y T-02)
 ```
 
 La portada lee `datos/direcciones.js` y reenvía cada código a la página que corresponde hoy. Los
