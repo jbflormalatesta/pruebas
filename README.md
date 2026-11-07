@@ -18,6 +18,7 @@ repositorio es exactamente lo que se publica.
 | Cambiar correo o redes | `datos/sitio.js` | `contacto` (y el pie de cada página, que lo repite) |
 | Corregir el texto de una especie | `datos/especies.js` | buscar el código, por ejemplo `"A-71"` |
 | Decidir adónde lleva el QR de las fichas A5 | `datos/sitio.js` | `qrFichas`: `"ficha"` o `"linktree"` |
+| Ubicar un sector, un servicio o un ejemplar en el plano | `datos/plano.js` | `col` y `fila` (las instrucciones están al principio del archivo) |
 | Subir fotos del sitio | `fotos/sitio/` | ver el README de esa carpeta |
 | Subir fotos de especies | `fotos/especies/` | `A-71-primavera.jpg`, etc. |
 
@@ -31,11 +32,13 @@ Los cambios se ven en el sitio en uno a diez minutos.
 
 ```
 index.html            Portada (y enrutador de los QR impresos)
-visita/               Visitá el Jardín: horarios, cómo llegar, servicios, pautas, sectores
+visita/               Visitá el Jardín: horarios, cómo llegar, servicios, pautas, visitas guiadas
+plano/                Plano del Jardín: relevamiento de 2026, sectores, servicios y entradas (plano.js, plano.css)
 coleccion/            La colección: listado y fichas (coleccion.js, coleccion.css)
+centinelas/           Programa Centinelas de Nativas
 el-jardin/            El Jardín: historia, misión, institucional, contacto
 comun/                sitio.css (estilos y paleta) y sitio.js (aviso, horarios, enlaces)
-datos/                sitio.js, especies.js y direcciones.js
+datos/                sitio.js, especies.js, direcciones.js y plano.js
 img/                  logos, íconos e imagen para compartir
 fotos/sitio/          fotos de las páginas
 fotos/especies/       fotos de las cuatro estaciones
@@ -53,10 +56,10 @@ navegación de **todas** las páginas.
 | `?A-01` … `?A-76`, `?H-01` … `?H-83` | Etiquetas D1 de especie | Ficha de la especie |
 | `?A-01&f` … `?H-83&f` | Fichas A5 D2 | Ficha de la especie (o Linktree, según `qrFichas`) |
 | `?acceso` | A1 · Cartel de acceso | Visitá el Jardín |
-| `?S-01` … `?S-06` | C1 · Carteles de sector | El sector, en Visitá el Jardín |
-| `?P-01` | C2 · Panel Mariposario nativo | El panel, en Visitá el Jardín |
-| `?P-02` | C2 · Panel Centinelas de Nativas | Centinelas, en la portada |
-| `?T-01`, `?T-02` | B1 · Tótems direccionales | Los sectores, en Visitá el Jardín |
+| `?S-01` … `?S-06` | C1 · Carteles de sector | El sector, en el plano |
+| `?P-01` | C2 · Panel Mariposario nativo | El panel, en el plano |
+| `?P-02` | C2 · Panel Centinelas de Nativas | La página de Centinelas |
+| `?T-01`, `?T-02` | B1 · Tótems direccionales | El plano, con «Estás acá» cuando el tótem está ubicado |
 
 Sectores: S-01 Talar bonaerense · S-02 Vivero de nativas · S-03 Huerta agroecológica · S-04 Estanque ·
 S-05 Aromáticas y medicinales · S-06 Compostera.

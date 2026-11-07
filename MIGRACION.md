@@ -39,11 +39,13 @@ que puede convivir con el portal sin conflictos.
 | Ruta | Qué es |
 |---|---|
 | `index.html` | Portada. En `<head>` lleva el enrutador de los QR (ver 4). |
-| `visita/`, `coleccion/`, `el-jardin/` | Secciones (cada una con su `index.html`). |
+| `visita/`, `plano/`, `coleccion/`, `centinelas/`, `el-jardin/` | Secciones (cada una con su `index.html`). |
 | `comun/sitio.css`, `comun/sitio.js` | Estilos (paleta institucional) y comportamientos comunes. |
 | `datos/sitio.js` | Aviso, horarios, contactos y enlaces a formularios (lo edita el Jardín). |
 | `datos/especies.js` | Fichas de las 156 especies de la colección. |
 | `datos/direcciones.js` | Contrato de direcciones de los QR impresos. |
+| `datos/plano.js` | Ubicación de sectores, servicios, entradas y ejemplares en el plano (lo edita el Jardín). |
+| `plano/plano.js`, `.css` | Plano del Jardín (el dibujo va dentro de `plano/index.html`). |
 | `coleccion/coleccion.js`, `.css` | Listado y fichas de la colección. |
 | `img/`, `fotos/` | Logos, íconos y fotografías. |
 | `404.html` | Redirección de direcciones sin «?» y de páginas inexistentes. |
@@ -107,6 +109,7 @@ nada.
 
 - `datos/sitio.js`: aviso, horarios, contactos y enlaces.
 - `datos/especies.js`: textos de las fichas.
+- `datos/plano.js`: ubicaciones en el plano.
 - `fotos/`: fotografías.
 
 Todo lo demás es estructura. Si el área de Sistemas prefiere integrar el contenido a su gestor de
