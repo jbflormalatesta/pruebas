@@ -65,13 +65,14 @@ a:hover { color: var(--verde-profundo); }
 }
 .principal a:hover { border-bottom-color: rgba(246, 241, 225, .45); color: var(--crema); }
 .principal a[aria-current="page"] { border-bottom-color: var(--verde-claro); }
-@media (max-width: 719px) {
+@media (max-width: 899px) {
   .banda .in { padding-bottom: 0; }
-  .principal { flex-basis: 100%; justify-content: flex-start; margin: 0 -11px; }
+  .principal { flex-basis: 100%; justify-content: flex-start; margin: 0 -8px; }
   .principal ul { flex-wrap: wrap; overflow: visible; gap: 0 2px; }
-  .principal a { padding: 9px 11px 8px; }
+  .principal a { padding: 9px 8px 8px; }
 }
-@media (min-width: 720px) { .banda .logo img { height: 56px; } }
+@media (min-width: 900px) { .banda .logo img { height: 56px; } }
+@media (min-width: 900px) and (max-width: 1079px) { .principal a { padding-left: 9px; padding-right: 9px; font-size: 15px; } }
 
 /* ---------- aviso editable ---------- */
 .aviso { background: var(--salvia); border-bottom: 1px solid var(--linea); }
@@ -196,3 +197,49 @@ button, input, select, textarea { font: inherit; }
 }
 .seccion.pegada { padding-top: 0; }
 .mas-aire { margin-top: 14px; }
+
+/* ---------- agenda (comun/agenda.js) ---------- */
+.agenda-lista { display: grid; gap: 12px; }
+.agenda-mes { font-family: var(--fuente); font-weight: 800; font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--verde); margin: 22px 0 10px; }
+.agenda-mes:first-child { margin-top: 4px; }
+.actividad { display: grid; grid-template-columns: 62px 1fr; gap: 16px; align-items: start; background: var(--papel);
+  border: 1.5px solid #E4E2CC; border-radius: var(--radio); padding: 16px; }
+.actividad .fecha { margin: 0; background: var(--verde); color: #fff; border-radius: 12px; text-align: center; padding: 9px 4px 8px; line-height: 1; }
+.actividad .fecha .dia { display: block; font-family: var(--fuente-titulo); font-size: 30px; }
+.actividad .fecha .mes { display: block; font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin-top: 6px; }
+.actividad .cuando { margin: 0 0 2px; font-weight: 800; font-size: 15px; color: var(--verde); }
+.actividad h3 { margin: 0 0 6px; font-size: 20px; }
+.actividad .lugar { display: flex; gap: 6px; align-items: flex-start; margin: 0 0 6px; color: var(--tinta-suave); font-size: 15.5px; }
+.actividad .lugar svg { flex: 0 0 18px; width: 18px; height: 18px; margin-top: 3px; color: var(--verde); }
+.actividad .texto { margin: 0 0 6px; color: var(--tinta-suave); }
+.actividad .acciones { margin: 8px 0 0; font-weight: 800; font-size: 15px; }
+.actividad.breve { padding: 12px 14px; grid-template-columns: 54px 1fr; gap: 14px; }
+.actividad.breve .fecha .dia { font-size: 26px; }
+.actividad.breve h3 { font-size: 18px; margin-bottom: 2px; }
+.actividad.breve .lugar { margin: 0; }
+.marca-dia { display: inline-block; vertical-align: 1px; margin-left: 4px; background: var(--naranja); color: var(--tinta);
+  font-size: 11.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 2px 9px; }
+.agenda-estado { background: var(--salvia); border-radius: var(--radio); padding: 18px 20px; }
+.agenda-estado p { margin: 0; color: var(--tinta); font-weight: 700; }
+.agenda-estado .botones { margin-top: 14px; }
+.agenda-cargando { color: var(--tinta-suave); font-weight: 700; }
+.agenda .nota { margin-top: 14px; }
+@media (min-width: 700px) { .agenda-lista.dos-col { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---------- recursos (recursos/recursos.js) ---------- */
+.recursos-grupo + .recursos-grupo { margin-top: 26px; }
+.recursos-grupo h2 { font-family: var(--fuente); font-weight: 800; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--verde); margin: 4px 0 12px; }
+.recursos-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.recurso { display: grid; grid-template-columns: 48px 1fr; gap: 6px 16px; align-items: start; background: var(--papel);
+  border: 1.5px solid #E4E2CC; border-radius: var(--radio); padding: 16px; }
+.recurso .ico { width: 48px; height: 48px; border-radius: 12px; background: var(--salvia); display: grid; place-items: center; color: var(--verde); }
+.recurso .ico svg { width: 26px; height: 26px; }
+.recurso h3 { margin: 2px 0 4px; }
+.recurso p { margin: 0 0 6px; color: var(--tinta-suave); }
+.recurso .meta { font-size: 14px; font-weight: 700; color: var(--cientifico); }
+.recurso .boton { grid-column: 2; justify-self: start; min-height: 46px; padding: 10px 20px; }
+@media (min-width: 700px) {
+  .recurso { grid-template-columns: 48px 1fr auto; align-items: center; }
+  .recurso .boton { grid-column: 3; justify-self: end; }
+}
