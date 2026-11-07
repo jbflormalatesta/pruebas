@@ -19,6 +19,7 @@
   --linea: #CDD4AB;
   --tinta-suave: #4A5530;
   --cientifico: #5C7433;
+  --produccion: #7A9622;     /* color de zona «producción» de la señalética (solo en el plano) */
 
   --radio: 14px;
   --ancho: 1080px;
@@ -64,8 +65,9 @@ a:hover { color: var(--verde-profundo); }
 .principal a[aria-current="page"] { border-bottom-color: var(--verde-claro); }
 @media (max-width: 719px) {
   .banda .in { padding-bottom: 0; }
-  .principal { flex-basis: 100%; justify-content: flex-start; margin: 0 -12px; }
-  .principal a { padding: 10px 12px 10px; }
+  .principal { flex-basis: 100%; justify-content: flex-start; margin: 0 -11px; }
+  .principal ul { flex-wrap: wrap; overflow: visible; gap: 0 2px; }
+  .principal a { padding: 9px 11px 8px; }
 }
 @media (min-width: 720px) { .banda .logo img { height: 56px; } }
 
@@ -96,6 +98,7 @@ p { margin: 0 0 12px; }
 /* ---------- botones ---------- */
 button, input, select, textarea { font: inherit; }
 .nw { white-space: nowrap; }
+.grilla.arriba { align-items: start; }
 .botones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
 .boton {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px;
@@ -134,6 +137,14 @@ button, input, select, textarea { font: inherit; }
 .tarjeta .codigo { font-size: 12.5px; font-weight: 800; letter-spacing: .1em; color: var(--verde); text-transform: uppercase; margin-bottom: 4px; }
 .tarjeta h3.titulo { font-family: var(--fuente-titulo); font-weight: 400; font-size: 23px; }
 :target.tarjeta { border-color: var(--verde); box-shadow: 0 0 0 3px var(--verde-claro); }
+
+/* ---------- fases numeradas y listas ---------- */
+.fases { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+@media (min-width: 860px) { .fases { grid-template-columns: repeat(3, 1fr); } }
+.fases li { position: relative; padding-top: 64px; }
+.fases .num { position: absolute; top: 16px; left: 20px; font-family: var(--fuente-titulo); font-size: 38px; line-height: 1; color: var(--verde); }
+.lista { margin: 0 0 8px; padding-left: 1.15em; color: var(--tinta-suave); }
+.lista li { margin: 5px 0; }
 
 /* ---------- horarios ---------- */
 .horarios { margin: 0 0 12px; display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; }
