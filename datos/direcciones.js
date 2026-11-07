@@ -9,7 +9,7 @@
  *
  * REGLAS
  *   - Los códigos NO se cambian ni se borran: están impresos en chapa.
- *   - Lo que sí se puede cambiar es el «destino» (por ejemplo, cuando exista la página del plano).
+ *   - Lo que sí se puede cambiar es el «destino» (la página a la que lleva cada código).
  *   - Para una pieza nueva, se agrega un código nuevo al final.
  *   - Los destinos son relativos a la portada (sin barra al principio), así funcionan igual
  *     en GitHub, en la copia de prueba y en el dominio municipal.
@@ -24,20 +24,20 @@ window.DIRECCIONES = {
     // A1 · Cartel de acceso (tranquera principal)
     "acceso": { pieza: "A1 · Cartel de acceso", destino: "visita/" },
 
-    // C1 · Carteles de sector (400 × 250 mm). En la etapa 2 pasan al plano del Jardín.
-    "S-01": { pieza: "C1 · Sector Talar bonaerense", destino: "visita/#S-01" },
-    "S-02": { pieza: "C1 · Sector Vivero de nativas", destino: "visita/#S-02" },
-    "S-03": { pieza: "C1 · Sector Huerta agroecológica", destino: "visita/#S-03" },
-    "S-04": { pieza: "C1 · Sector Estanque", destino: "visita/#S-04" },
-    "S-05": { pieza: "C1 · Sector Aromáticas y medicinales", destino: "visita/#S-05" },
-    "S-06": { pieza: "C1 · Sector Compostera", destino: "visita/#S-06" },
+    // C1 · Carteles de sector (400 × 250 mm): el sector, en el plano del Jardín.
+    "S-01": { pieza: "C1 · Sector Talar bonaerense", destino: "plano/#S-01" },
+    "S-02": { pieza: "C1 · Sector Vivero de nativas", destino: "plano/#S-02" },
+    "S-03": { pieza: "C1 · Sector Huerta agroecológica", destino: "plano/#S-03" },
+    "S-04": { pieza: "C1 · Sector Estanque", destino: "plano/#S-04" },
+    "S-05": { pieza: "C1 · Sector Aromáticas y medicinales", destino: "plano/#S-05" },
+    "S-06": { pieza: "C1 · Sector Compostera", destino: "plano/#S-06" },
 
     // C2 · Paneles interpretativos (700 × 500 mm)
-    "P-01": { pieza: "C2 · Panel Mariposario nativo", destino: "visita/#P-01" },
-    "P-02": { pieza: "C2 · Panel Centinelas de Nativas", destino: "./#centinelas" },
+    "P-01": { pieza: "C2 · Panel Mariposario nativo", destino: "plano/#P-01" },
+    "P-02": { pieza: "C2 · Panel Centinelas de Nativas", destino: "centinelas/" },
 
-    // B1 · Tótems direccionales (600 × 701 mm). En la etapa 2 pasan al plano del Jardín.
-    "T-01": { pieza: "B1 · Tótem direccional 1", destino: "visita/#sectores" },
-    "T-02": { pieza: "B1 · Tótem direccional 2", destino: "visita/#sectores" },
+    // B1 · Tótems direccionales (600 × 701 mm): el plano, con «Estás acá» si el tótem está ubicado.
+    "T-01": { pieza: "B1 · Tótem direccional 1", destino: "plano/#T-01" },
+    "T-02": { pieza: "B1 · Tótem direccional 2", destino: "plano/#T-02" },
   },
 };
