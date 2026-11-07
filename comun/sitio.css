@@ -20,6 +20,8 @@
   --tinta-suave: #4A5530;
   --cientifico: #5C7433;
   --produccion: #7A9622;     /* color de zona «producción» de la señalética (solo en el plano) */
+  --tierra: #E9DFC3;         /* tono oscuro del crema: calle de tierra y ripio (solo en el plano) */
+  --ripio: #C9BB93;          /* piedras del ripio (solo en el plano) */
 
   --radio: 14px;
   --ancho: 1080px;
