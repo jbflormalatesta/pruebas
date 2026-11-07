@@ -41,7 +41,7 @@ window.PLANO = {
     { codigo: "T-02", tipo: "totem", nombre: "Tótem direccional 2", col: null, fila: null },
 
     // SERVICIOS
-    { codigo: "banos", tipo: "servicio", icono: "banos", nombre: "Baños de mujeres, de hombres y para personas con discapacidad",
+    { codigo: "banos", tipo: "servicio", icono: "banos", nombre: "Baños mixtos y accesibles",
       nota: "En el edificio principal, cruzando la calle interna", col: -5, fila: 26 },
     { codigo: "agua-1", tipo: "servicio", icono: "agua", nombre: "Agua potable", nota: "Frente a la puerta del invernadero grande", col: 24, fila: 11 },
     { codigo: "agua-2", tipo: "servicio", icono: "agua", nombre: "Agua potable", nota: "Antes de la entrada a la compostera", col: 45, fila: 11 },
@@ -57,6 +57,11 @@ window.PLANO = {
     { codigo: "puerta", tipo: "puerta", nombre: "Puerta, desde la calle interna", col: 1, fila: 33 },
     { codigo: "porton-2", tipo: "puerta", nombre: "Portón doble hoja, desde la calle interna", col: 1, fila: 21.5 },
     { codigo: "bosch", tipo: "acceso", nombre: "Acceso peatonal por la calle Gral. Bosch", col: 56, fila: 13 },
+
+    // TRANSPORTE (afuera del alambrado, hacia la Ruta 40)
+    { codigo: "parada", tipo: "parada", nombre: "Parada de colectivos 322 y 136", nota: "Techada, con dos asientos, en la vereda de la Ruta 40", col: 43.5, fila: 73.8 },
+    { codigo: "paso-nivel", tipo: "cruce", nombre: "Paso a nivel de Ruta 40 y Gral. Bosch", nota: "Para cruzar las vías y la ruta desde la bicisenda",
+      rotulo: "Paso a nivel", rotuloLado: "izq", col: 59.5, fila: 77.7 },
   ],
 
   // EJEMPLARES DE LA COLECCIÓN EN EL PLANO (para «Dónde está» en la ficha de cada especie)
