@@ -65,9 +65,13 @@ navegación de **todas** las páginas.
 | `?P-01` | C2 · Panel Mariposario nativo | El panel, en el plano |
 | `?P-02` | C2 · Panel Centinelas de Nativas | La página de Centinelas |
 | `?T-01`, `?T-02` | B1 · Tótems direccionales | El plano, con «Estás acá» cuando el tótem está ubicado |
+| `?plano` | A2 · Cartel con el plano, junto al portón de entrada | El plano, con «Estás acá» en el cartel |
+| `?triptico` | Tríptico del Jardín (impreso) | La portada del sitio |
+| `?bitacora` | Bitácora de observación de Centinelas (impresa) | La página de Centinelas |
 
 Sectores: S-01 Talar bonaerense · S-02 Vivero de nativas · S-03 Huerta agroecológica · S-04 Estanque ·
 S-05 Aromáticas y medicinales · S-06 Compostera.
+El folleto «Compostá en casa» usa `?S-06` (la compostera en el plano).
 
 ## Copia de prueba
 
