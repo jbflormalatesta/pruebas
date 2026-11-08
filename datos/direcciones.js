@@ -39,5 +39,12 @@ window.DIRECCIONES = {
     // B1 · Tótems direccionales (600 × 701 mm): el plano, con «Estás acá» si el tótem está ubicado.
     "T-01": { pieza: "B1 · Tótem direccional 1", destino: "plano/#T-01" },
     "T-02": { pieza: "B1 · Tótem direccional 2", destino: "plano/#T-02" },
+
+    // A2 · Cartel con el plano (1200 × 800 mm), junto al portón de entrada: el plano con «Estás acá».
+    "plano": { pieza: "A2 · Cartel con el plano del Jardín", destino: "plano/#cartel-plano" },
+
+    // Impresos de «Recursos» que también se reparten en papel
+    "triptico": { pieza: "Tríptico del Jardín", destino: "./" },
+    "bitacora": { pieza: "Bitácora de observación de Centinelas de Nativas", destino: "centinelas/" },
   },
 };

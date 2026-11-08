@@ -37,8 +37,10 @@ window.PLANO = {
     // Cuando estén, se cargan col y fila. Los tótems no se dibujan: con su QR, el plano marca «Estás acá».
     { codigo: "P-01", tipo: "panel", nombre: "Panel Mariposario nativo", col: null, fila: null },
     { codigo: "P-02", tipo: "panel", nombre: "Panel Centinelas de Nativas", col: null, fila: null },
-    { codigo: "T-01", tipo: "totem", nombre: "Tótem direccional 1", col: null, fila: null },
-    { codigo: "T-02", tipo: "totem", nombre: "Tótem direccional 2", col: null, fila: null },
+    { codigo: "T-01", tipo: "totem", nombre: "Tótem direccional 1 (ubicación provisoria, a validar)", col: 6, fila: 23 },
+    { codigo: "T-02", tipo: "totem", nombre: "Tótem direccional 2 (ubicación provisoria, a validar)", col: 20, fila: 26 },
+    // CARTEL CON EL PLANO (A2), apenas se entra por el portón doble. Tampoco se dibuja: su QR marca «Estás acá».
+    { codigo: "cartel-plano", tipo: "totem", nombre: "Cartel con el plano, junto al portón de entrada", col: 3, fila: 21 },
 
     // SERVICIOS
     { codigo: "banos", tipo: "servicio", icono: "banos", nombre: "Baños mixtos y accesibles",
