@@ -169,7 +169,8 @@
     var c = normalizar(h);
     if (/^[AH]-\d\d$/.test(c)) return especie(c);
     if (porCodigo[c]) {
-      if (!destacar(c, c.charAt(0) === 'T') && c.charAt(0) === 'T') { decir('Este es el plano del Jardín.'); mostrarPlano(); }
+      var aca = porCodigo[c].tipo === 'totem';   // tótems y cartel del plano: «Estás acá» y el plano a la vista
+      if (!destacar(c, aca) && aca) { decir('Este es el plano del Jardín.'); mostrarPlano(); }
     }
   }
 
