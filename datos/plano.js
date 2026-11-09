@@ -33,12 +33,14 @@ window.PLANO = {
     { codigo: "inv-chico", tipo: "referencia", letra: "a", nombre: "Invernadero chico (en mantenimiento)", col: 41, fila: 6 },
     { codigo: "palets", tipo: "referencia", letra: "b", nombre: "Ejemplares grandes sobre palets", col: 31, fila: 6 },
 
-    // PANELES INTERPRETATIVOS (C2) Y TÓTEMS DIRECCIONALES (B1): todavía no están instalados.
-    // Cuando estén, se cargan col y fila. Los tótems no se dibujan: con su QR, el plano marca «Estás acá».
+    // PANELES INTERPRETATIVOS (C2): todavía no están instalados. Cuando estén, se cargan col y fila.
     { codigo: "P-01", tipo: "panel", nombre: "Panel Mariposario nativo", col: null, fila: null },
     { codigo: "P-02", tipo: "panel", nombre: "Panel Centinelas de Nativas", col: null, fila: null },
-    { codigo: "T-01", tipo: "totem", nombre: "Tótem direccional 1 (ubicación provisoria, a validar)", col: 6, fila: 23 },
-    { codigo: "T-02", tipo: "totem", nombre: "Tótem direccional 2 (ubicación provisoria, a validar)", col: 20, fila: 26 },
+    // TÓTEMS DIRECCIONALES (B1): ubicación validada por el Jardín el 09/11/2026. No se dibujan: con su QR,
+    // el plano marca «Estás acá». Las lamas B2 no llevan QR: Col 22 · Fila 31 (Estanque), Col 22 · Fila 16
+    // (Vivero, huerta y compostera) y en el dorso del T-01 (Baños y salida).
+    { codigo: "T-01", tipo: "totem", nombre: "Tótem de la entrada", col: 6, fila: 23 },
+    { codigo: "T-02", tipo: "totem", nombre: "Tótem de la plazoleta", col: 20, fila: 26 },
     // CARTEL CON EL PLANO (A2), apenas se entra por el portón doble. Tampoco se dibuja: su QR marca «Estás acá».
     { codigo: "cartel-plano", tipo: "totem", nombre: "Cartel con el plano, junto al portón de entrada", col: 3, fila: 21 },
 
