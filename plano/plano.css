@@ -140,3 +140,193 @@
   .plano-herramientas, .plano-estado { display: none; }
   .plano-marco { max-height: none; overflow: visible; border: 0; }
 }
+
+/* =====================  Etapa 1: visor con capas, recorridos, mes a mes e indicadores  ===================== */
+/* pestañas (sin JavaScript se ven las tres secciones, una debajo de la otra) */
+.pestanas { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 18px; border-bottom: 2px solid var(--linea); }
+.pestanas[hidden], .vista[hidden], .capas[hidden], .segmentado[hidden], .ruteo[hidden], .mes-controles[hidden] { display: none; }
+.pestanas button { appearance: none; background: none; border: 0; border-bottom: 3px solid transparent; margin-bottom: -2px;
+  padding: 10px 12px 9px; font-weight: 800; font-size: 16px; color: var(--tinta-suave); cursor: pointer; border-radius: 10px 10px 0 0; }
+.pestanas button[aria-selected="true"] { color: var(--verde-profundo); border-bottom-color: var(--verde); background: var(--papel); }
+.pestanas button:hover { color: var(--verde-profundo); }
+.con-pestanas .vista.seccion { padding-top: 0; }
+
+/* herramientas: capas y orientación */
+.plano-herramientas { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.capas-caja { flex: 1 1 100%; }
+.capas-caja[hidden] { display: none; }
+.capas-caja > summary { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 8px 14px; border: 1.5px solid var(--linea);
+  border-radius: var(--radio); background: var(--papel); font-weight: 800; font-size: 14.5px; color: var(--verde-profundo); cursor: pointer; list-style: none; }
+.capas-caja > summary::-webkit-details-marker { display: none; }
+.capas-caja > summary::after { content: ""; width: 7px; height: 7px; border: solid currentColor; border-width: 0 2px 2px 0; transform: rotate(45deg) translateY(-2px); }
+.capas-caja[open] > summary { margin-bottom: 8px; }
+.capas-caja[open] > summary::after { transform: rotate(-135deg) translateY(-2px); }
+.segmentado .angosto { display: none; }
+@media (max-width: 639px) {
+  .capas-caja { flex: 0 0 auto; }
+  .capas-caja[open] { flex: 1 1 100%; }
+  .segmentado .ancho { display: none; }
+  .segmentado .angosto { display: inline; }
+  .capa { font-size: 13.5px; min-height: 34px; padding: 4px 10px 4px 7px; }
+}
+@media (min-width: 640px) { .capas-caja > summary { display: none; } }
+.capas { display: flex; flex-wrap: wrap; gap: 6px; }
+.capa { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 5px 11px 5px 8px; border-radius: 999px;
+  background: var(--papel); border: 1.5px solid var(--linea); font-size: 14px; font-weight: 700; color: var(--tinta-suave); cursor: pointer; line-height: 1.2; }
+.capa input { width: 17px; height: 17px; margin: 0; accent-color: var(--verde); }
+.capa:has(input:checked) { background: var(--salvia); border-color: var(--verde-claro); color: var(--verde-profundo); }
+.botonera { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.segmentado { display: inline-flex; border: 1.5px solid var(--linea); border-radius: var(--radio); overflow: hidden; background: var(--papel); }
+.segmentado button { appearance: none; border: 0; background: none; min-height: 42px; padding: 8px 12px; font-weight: 800; font-size: 14.5px;
+  color: var(--tinta-suave); cursor: pointer; line-height: 1.15; }
+.segmentado button + button { border-left: 1.5px solid var(--linea); }
+.segmentado button[aria-pressed="true"] { background: var(--verde); color: #fff; }
+
+/* capas apagadas y modos */
+.plano-marco.sin-sectores #capa-sectores, .plano-marco.sin-servicios #capa-servicios, .plano-marco.sin-accesos #capa-accesos,
+.plano-marco.sin-carteles #capa-carteles, .plano-marco.sin-recorridos #capa-recorridos, .plano-marco.sin-arboles #arboles { display: none; }
+.plano-marco.marcando { box-shadow: 0 0 0 3px var(--verde-claro); }
+.plano-marco.marcando .plano-svg { cursor: crosshair; }
+
+/* marcas nuevas: cartelería, bancos, selección */
+.plano-svg .marca.totem rect, .plano-svg .marca.cartel rect { fill: var(--verde-profundo); }
+.plano-svg .marca.totem .num, .plano-svg .marca.cartel .num { font-size: 1.15px; }
+.plano-svg .marca.lama path { fill: var(--produccion); stroke: var(--papel); stroke-width: .25; }
+.plano-svg .marca.lama .num { font-size: 1.15px; fill: var(--tinta); }
+.plano-svg .marca.on > circle, .plano-svg .marca.on > rect, .plano-svg .marca.on > path { stroke: var(--naranja); stroke-width: .5; }
+.plano-svg .marca:focus { outline: none; }
+.plano-svg .marca:focus-visible > circle, .plano-svg .marca:focus-visible > rect { stroke: var(--verde-claro); stroke-width: .55; }
+.plano-svg .banco circle { fill: var(--papel); stroke: var(--naranja); stroke-width: .3; cursor: pointer; }
+.plano-svg .banco.on circle { fill: var(--naranja); stroke: var(--tinta); stroke-width: .2; }
+
+/* caminos y recorridos */
+.plano-svg .ruta path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.plano-svg .ruta .casco { stroke: var(--papel); stroke-width: 1.3; }
+.plano-svg .ruta .linea { stroke: var(--verde-profundo); stroke-width: .62; }
+.plano-svg .ruta .linea.afuera { stroke-dasharray: 1 .8; }
+.plano-svg .ruta.circuito .linea { stroke: var(--verde); }
+.plano-svg .paradas circle { fill: var(--papel); stroke: var(--naranja); stroke-width: .38; }
+.plano-svg .paradas text { font: 800 1.3px var(--fuente); fill: var(--tinta); text-anchor: middle; }
+.plano-svg .partida .punto { fill: var(--naranja); stroke: var(--tinta); stroke-width: .2; }
+
+/* cómo llegar */
+.ruteo { display: grid; gap: 10px; margin: 12px 0 0; padding: 12px 14px; background: var(--salvia); border-radius: var(--radio); }
+@media (min-width: 640px) { .ruteo { grid-template-columns: repeat(3, minmax(0, 1fr)) auto; align-items: end; } }
+.ruteo .campo { display: grid; gap: 4px; min-width: 0; }
+.ruteo label { font-size: 12.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--verde-profundo); }
+.ruteo select { width: 100%; min-height: 44px; padding: 8px 10px; border: 1.5px solid var(--linea); border-radius: 10px;
+  background: var(--papel); color: var(--tinta); font-weight: 700; font-size: 15px; }
+.plano-ficha { margin: 10px 2px 4px; }
+.plano-ficha .plano-estado { margin: 0 0 6px; }
+.plano-detalle p { margin: 0 0 8px; color: var(--tinta-suave); }
+.plano-detalle .ruta-texto b { color: var(--verde-profundo); }
+.plano-detalle .pista { font-size: 15px; }
+.paradas-lista { list-style: none; margin: 8px 0 10px; padding: 0; display: grid; gap: 10px; }
+.paradas-lista li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; }
+.paradas-lista .n { width: 28px; height: 28px; border-radius: 50%; background: var(--papel); border: 2.5px solid var(--naranja); color: var(--tinta); display: grid; place-items: center;
+  font-weight: 800; font-size: 14px; }
+.paradas-lista .sin-ubicar .n { background: var(--linea); color: var(--tinta); }
+.paradas-lista p { margin: 2px 0 0; font-size: 15px; }
+.paradas-lista .tramo { margin-left: 8px; font-size: 13.5px; font-weight: 800; color: var(--cientifico); white-space: nowrap; }
+.enlace { appearance: none; background: none; border: 0; padding: 0; font: inherit; font-weight: 800; color: var(--verde-profundo); cursor: pointer;
+  text-align: left; text-decoration: underline; text-underline-offset: .18em; }
+
+/* referencias: botones que destacan en el plano */
+.leyenda .ref-boton { appearance: none; background: none; border: 0; display: flex; align-items: center; gap: 10px; width: calc(100% + 12px);
+  margin: -4px -6px; padding: 4px 6px; border-radius: 10px; font: inherit; font-size: 15px; line-height: 1.3; color: var(--tinta-suave);
+  text-align: left; cursor: pointer; }
+.leyenda .ref-boton:hover { background: var(--salvia); }
+.leyenda .ref-boton.on { background: var(--salvia); box-shadow: inset 3px 0 0 var(--naranja); color: var(--tinta); }
+.leyenda .ref-boton > span:last-child { font-weight: 700; }
+.leyenda .ref-boton small { font-weight: 600; }
+@media (min-width: 900px) { .leyenda { position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow: auto; } }
+.sw.cartel { flex-basis: 26px; height: 20px; background: var(--verde-profundo); color: #fff; font-size: 10px; }
+.sw.lama { flex-basis: 14px; height: 14px; margin: 0 6px; border-radius: 2px; background: var(--produccion); transform: rotate(45deg); color: transparent; }
+.sw.panel { flex-basis: 22px; height: 22px; margin: 0 2px; background: var(--verde-profundo); color: #fff; font-size: 12px; }
+.sw.banco { flex-basis: 14px; height: 14px; margin: 0 6px; border-radius: 50%; background: var(--papel); border: 2.5px solid var(--naranja); }
+
+/* recorridos sugeridos */
+.recorrido-tarjeta.on { border-color: var(--verde); box-shadow: 0 0 0 3px var(--verde-claro); }
+.recorrido-tarjeta .paradas-resumen { font-size: 14.5px; font-weight: 700; color: var(--cientifico); }
+
+/* especies en las tarjetas de sector */
+.sector-especies { margin-top: 4px; }
+.sector-especies p { margin: 0 0 6px; }
+.sector-especies .sub { font-size: 12.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--verde); margin-bottom: 2px; }
+.sector-especies .especies { font-size: 15px; }
+.sector-especies .especies a { font-weight: 700; }
+.sector-especies .mes-sector { font-size: 15px; font-weight: 800; color: var(--verde-profundo); }
+.sector-especies .revisar { font-size: 13.5px; font-style: italic; }
+
+/* El Jardín mes a mes */
+.mes-controles { display: grid; gap: 10px; margin: 6px 0 14px; }
+.meses, .estaciones { display: flex; flex-wrap: wrap; gap: 6px; }
+.meses button, .estaciones button { appearance: none; min-height: 40px; min-width: 52px; padding: 6px 12px; border: 1.5px solid var(--linea);
+  border-radius: 999px; background: var(--papel); color: var(--tinta-suave); font-weight: 800; font-size: 14.5px; cursor: pointer; }
+.meses button[aria-pressed="true"], .estaciones button[aria-pressed="true"] { background: var(--verde); border-color: var(--verde); color: #fff; }
+.solo-nativas { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--tinta-suave); }
+.solo-nativas input { width: 18px; height: 18px; accent-color: var(--verde); }
+.mes-resumen { font-size: 18px; }
+.mes-resumen b { color: var(--verde-profundo); }
+.mes-listas h3 { display: flex; align-items: center; gap: 8px; }
+.sw-flor, .sw-fruto { display: inline-block; width: 14px; height: 14px; border-radius: 50%; }
+.sw-flor { background: var(--naranja); }
+.sw-fruto { background: var(--produccion); }
+.mes-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.mes-lista li { padding-top: 10px; border-top: 1px solid var(--linea); }
+.mes-lista li:first-child { padding-top: 0; border-top: 0; }
+.mes-lista .cab a { color: var(--verde-profundo); }
+.mes-lista i { color: var(--cientifico); }
+.mes-lista p { margin: 4px 0 0; font-size: 15px; color: var(--tinta-suave); }
+.mes-lista .cuando { font-size: 14px; font-weight: 800; color: var(--cientifico); }
+.mes-lista .donde.sin { font-style: italic; }
+.origen { display: inline-block; vertical-align: 2px; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.origen.nat { background: var(--salvia); color: var(--verde-profundo); }
+.origen.exo { background: var(--tierra); color: var(--tinta-suave); }
+.chip { appearance: none; margin: 2px 4px 2px 0; padding: 2px 10px; border: 1.5px solid var(--verde-claro); border-radius: 999px; background: var(--papel);
+  color: var(--verde-profundo); font: inherit; font-size: 13.5px; font-weight: 800; cursor: pointer; }
+.chip:hover { background: var(--salvia); }
+.region { margin-top: 14px; }
+.region summary { font-weight: 800; color: var(--verde-profundo); cursor: pointer; }
+.vacio { font-style: italic; color: var(--tinta-suave); }
+
+/* Indicadores y superficies */
+.ind-cifras { margin-bottom: 16px; }
+.ind-figuras { margin-bottom: 6px; }
+.ind-fig { margin: 0; }
+.ind-svg { display: block; width: 100%; height: auto; max-width: 540px; margin: 6px 0 8px; overflow: visible; }
+.ind-svg text { font: 700 11px var(--fuente); fill: var(--tinta-suave); }
+.ind-svg text.chica { font-size: 10px; font-weight: 600; }
+.ind-svg .fuerte { font-weight: 800; fill: var(--verde-profundo); }
+.ind-svg .an1 { fill: var(--salvia); }
+.ind-svg .an2 { fill: var(--verde-claro); }
+.ind-svg .an3 { fill: var(--verde); }
+.ind-svg .guia { fill: none; stroke: var(--tinta-suave); stroke-width: .7; stroke-dasharray: 2 2; }
+.ind-svg .barra rect { fill: var(--cientifico); }
+.ind-svg .barra .et { fill: var(--tinta); }
+.ind-svg .barra .val { font-weight: 800; }
+.ind-svg .barra rect.nat, .sw-nat { fill: #456301; background: #456301; }
+.ind-svg .barra rect.exo, .sw-exo { fill: #C66A03; background: #C66A03; }
+.ind-leyenda { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 0; font-size: 14.5px; font-weight: 700; }
+.sw-nat, .sw-exo { display: inline-block; width: 14px; height: 14px; border-radius: 4px; }
+.sw-exo { margin-left: 10px; }
+.ind-fig figcaption { font-size: 14px; color: var(--tinta-suave); }
+.ind-tabla-marco { overflow-x: auto; margin: 12px 0 14px; }
+.ind-tabla { width: 100%; border-collapse: collapse; background: var(--papel); font-size: 15px; }
+.ind-tabla caption { text-align: left; font-weight: 800; color: var(--verde-profundo); padding: 0 0 6px; }
+.ind-tabla th, .ind-tabla td { padding: 8px 10px; border-bottom: 1px solid var(--linea); text-align: right; vertical-align: top; }
+.ind-tabla th[scope="row"], .ind-tabla thead th:first-child { text-align: left; }
+.ind-tabla thead th { font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--verde); }
+.ind-tabla td { font-variant-numeric: tabular-nums; }
+.ind-tabla small { display: block; font-size: 13px; font-weight: 600; color: var(--tinta-suave); }
+.ind-tabla tfoot th, .ind-tabla tfoot td { font-weight: 800; color: var(--verde-profundo); border-bottom: 0; }
+.ind-coleccion { margin-top: 8px; }
+.ind-metodo { margin-top: 12px; }
+
+@media print {
+  .pestanas, .ruteo, #recorridos, .plano-ficha:empty, .leyenda .botones { display: none !important; }
+  .vista[hidden] { display: none !important; }
+  .leyenda { position: static; max-height: none; overflow: visible; }
+  .ind-tabla-marco { overflow: visible; }
+  .tarjeta, .ind-tabla { break-inside: avoid; }
+}
