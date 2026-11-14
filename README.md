@@ -18,7 +18,9 @@ repositorio es exactamente lo que se publica.
 | Cambiar correo o redes | `datos/sitio.js` | `contacto` (y el pie de cada página, que lo repite) |
 | Corregir el texto de una especie | `datos/especies.js` | buscar el código, por ejemplo `"A-71"` |
 | Decidir adónde lleva el QR de las fichas A5 | `datos/sitio.js` | `qrFichas`: `"ficha"` o `"linktree"` |
-| Ubicar un sector, un servicio o un ejemplar en el plano | `datos/plano.js` | `col` y `fila` (las instrucciones están al principio del archivo) |
+| Ubicar un sector, un servicio, un cartel o un ejemplar en el plano | `datos/plano.js` | `col` y `fila` (las instrucciones están al principio del archivo). Cuando se instalen los paneles P-01 y P-02, cargar acá su lugar: los recorridos los incluyen solos |
+| Cambiar un recorrido sugerido del plano (paradas, textos, minutos) | `datos/recorridos.js` | la lista `paradas` de cada recorrido, con los códigos de `datos/plano.js` |
+| Corregir qué especies se ven en cada sector o cuándo florecen | `datos/mes-a-mes.js` | `sectores` (y pasar `revisar` a `false` cuando el equipo valide) y `especies` (meses de flor y frutos) |
 | Que una actividad aparezca en la **Agenda** | calendario «JB - Público» de Google (no se toca el sitio) | título, día, hora y lugar. De la descripción solo se publican los renglones que empiezan con «Web:» |
 | Cambiar la dirección de la aplicación que lee el calendario | `datos/sitio.js` | `agenda.datos` |
 | Sumar un material para descargar en **Recursos** | `recursos/archivos/` y `datos/recursos.js` | subir el archivo y copiar un bloque (instrucciones al principio de `datos/recursos.js`) |
@@ -36,14 +38,14 @@ Los cambios se ven en el sitio en uno a diez minutos.
 ```
 index.html            Portada (y enrutador de los QR impresos)
 visita/               Visitá el Jardín: horarios, cómo llegar, servicios, pautas, visitas guiadas
-plano/                Plano del Jardín: relevamiento de 2026, sectores, servicios y entradas (plano.js, plano.css)
+plano/                Plano del Jardín: capas, recorridos a pie, mes a mes e indicadores (plano.js, plano.css, ruteo.js y senderos.js; senderos.js se genera con herramientas/senderos.py y no se edita a mano)
 coleccion/            La colección: listado y fichas (coleccion.js, coleccion.css)
 agenda/               Agenda: actividades abiertas, del calendario «JB - Público» (comun/agenda.js)
 centinelas/           Programa Centinelas de Nativas
 recursos/             Recursos para descargar (recursos.js); los archivos van en recursos/archivos/
 el-jardin/            El Jardín: historia, misión, institucional, contacto
 comun/                sitio.css (estilos y paleta), sitio.js (aviso, horarios, enlaces) y agenda.js
-datos/                sitio.js, especies.js, direcciones.js, plano.js y recursos.js
+datos/                sitio.js, especies.js, direcciones.js, plano.js, recorridos.js, mes-a-mes.js y recursos.js
 img/                  logos, íconos e imagen para compartir
 fotos/sitio/          fotos de las páginas
 fotos/especies/       fotos de las cuatro estaciones

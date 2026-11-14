@@ -23,6 +23,7 @@
     clave = primero.toLowerCase();
     if (D.codigos[clave]) destino = D.codigos[clave].destino;
   }
+  if (destino && clave && /^plano\//.test(destino)) destino = destino.replace(/^plano\/(\?[^#]*)?/, 'plano/?qr=' + encodeURIComponent(clave));
   if (destino) location.replace(destino);
 })();
 </script>
