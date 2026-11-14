@@ -62,6 +62,24 @@
     var hoy = new Date(Date.now() - 3 * 3600 * 1000).toISOString().slice(0, 10); // UTC−3
     if (hoy > av.hasta) vigente = false;
   }
+  // Conteo anónimo de visitas (apagado hasta que datos/sitio.js diga visitas.activo: true).
+  // Solo avisa la sección y, si se llegó por un QR, su código. Sin cookies ni datos personales.
+  // Si la aplicación no está instalada o no responde, no pasa nada: el envío falla en silencio.
+  (function () {
+    var V = S.visitas || {};
+    var url = V.url || (S.agenda && S.agenda.datos) || '';
+    if (!V.activo || window.JB_REDIRIGIENDO || !/^https:\/\/script\.google\.com\//.test(url)) return;
+    try {
+      var partes = location.pathname.split('/').filter(Boolean), prueba = partes[0] === 'pruebas';
+      if (prueba) partes.shift();
+      var qr = '';
+      try { qr = sessionStorage.getItem('jb:qr') || ''; sessionStorage.removeItem('jb:qr'); } catch (e) {}
+      var cuerpo = JSON.stringify({ s: (partes[0] || 'inicio').replace(/\.html$/, ''), q: qr, p: prueba ? 1 : 0 });
+      if (navigator.sendBeacon) navigator.sendBeacon(url, cuerpo);
+      else if (window.fetch) fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true, body: cuerpo }).catch(function () {});
+    } catch (e) {}
+  })();
+
   if (vigente) {
     var icono = av.tipo === 'alerta'
       ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 1 21h22L12 2zm0 6.5c.6 0 1 .4 1 1V14a1 1 0 1 1-2 0V9.5c0-.6.4-1 1-1zm0 9.75a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg>'
