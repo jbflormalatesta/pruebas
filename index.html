@@ -24,7 +24,11 @@
     if (D.codigos[clave]) destino = D.codigos[clave].destino;
   }
   if (destino && clave && /^plano\//.test(destino)) destino = destino.replace(/^plano\/(\?[^#]*)?/, 'plano/?qr=' + encodeURIComponent(clave));
-  if (destino) location.replace(destino);
+  if (destino) {
+    try { sessionStorage.setItem('jb:qr', clave); } catch (e) {}   // para el conteo anónimo de QR (comun/sitio.js)
+    window.JB_REDIRIGIENDO = true;
+    location.replace(destino);
+  }
 })();
 </script>
 <title>Jardín Botánico Municipal «Florencio Malatesta» · Marcos Paz</title>

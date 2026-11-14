@@ -19,6 +19,8 @@ repositorio es exactamente lo que se publica.
 | Corregir el texto de una especie | `datos/especies.js` | buscar el código, por ejemplo `"A-71"` |
 | Decidir adónde lleva el QR de las fichas A5 | `datos/sitio.js` | `qrFichas`: `"ficha"` o `"linktree"` |
 | Ubicar un sector, un servicio, un cartel o un ejemplar en el plano | `datos/plano.js` | `col` y `fila` (las instrucciones están al principio del archivo). Cuando se instalen los paneles P-01 y P-02, cargar acá su lugar: los recorridos los incluyen solos |
+| Relevar los árboles del plano (especie, DAP, BDS, estado sanitario) | el plano con `?relevamiento` al final de la dirección | los datos quedan solo en ese navegador: exportar JSON o CSV seguido e importar para juntar lo de varias personas |
+| Activar el conteo anónimo de visitas | `datos/sitio.js` | `visitas: { activo: true }`, después de instalar el complemento «Visitas» en la aplicación de la agenda (instructivo en el proyecto) |
 | Cambiar un recorrido sugerido del plano (paradas, textos, minutos) | `datos/recorridos.js` | la lista `paradas` de cada recorrido, con los códigos de `datos/plano.js` |
 | Corregir qué especies se ven en cada sector o cuándo florecen | `datos/mes-a-mes.js` | `sectores` (y pasar `revisar` a `false` cuando el equipo valide) y `especies` (meses de flor y frutos) |
 | Que una actividad aparezca en la **Agenda** | calendario «JB - Público» de Google (no se toca el sitio) | título, día, hora y lugar. De la descripción solo se publican los renglones que empiezan con «Web:» |
