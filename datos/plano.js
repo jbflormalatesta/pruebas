@@ -37,9 +37,13 @@ window.PLANO = {
     { codigo: "inv-chico", tipo: "referencia", letra: "a", nombre: "Invernadero chico (en mantenimiento)", col: 41, fila: 6 },
     { codigo: "palets", tipo: "referencia", letra: "b", nombre: "Ejemplares grandes sobre palets", col: 31, fila: 6 },
 
-    // PANELES INTERPRETATIVOS (C2): todavía no están instalados. Cuando estén, se cargan col y fila.
-    { codigo: "P-01", tipo: "panel", pieza: "C2", qr: "P-01", nombre: "Panel Mariposario nativo", col: null, fila: null },
-    { codigo: "P-02", tipo: "panel", pieza: "C2", qr: "P-02", nombre: "Panel Centinelas de Nativas", col: null, fila: null },
+    // PANELES INTERPRETATIVOS (C2): todavía no están instalados. Ubicación proyectada aprobada el 14/11/2026, sobre el borde
+    // del sendero. «proyectado: true» = el plano aclara que el panel todavía no está. Al instalarlos: ajustar col y fila si
+    // hace falta y cambiar proyectado a false.
+    { codigo: "P-01", tipo: "panel", pieza: "C2", qr: "P-01", nombre: "Panel Mariposario nativo", nota: "Junto al sector de Aromáticas y medicinales",
+      proyectado: true, col: 20.5, fila: 49.5 },
+    { codigo: "P-02", tipo: "panel", pieza: "C2", qr: "P-02", nombre: "Panel Centinelas de Nativas", nota: "En el borde de la plazoleta, junto al tótem T-02",
+      proyectado: true, col: 17, fila: 26.5 },
     // TÓTEMS DIRECCIONALES (B1): ubicación validada por el Jardín el 09/11/2026. No se dibujan: con su QR,
     // el plano marca «Estás acá». Las lamas B2 no llevan QR: Col 22 · Fila 31 (Estanque), Col 22 · Fila 16
     // (Vivero, huerta y compostera) y en el dorso del T-01 (Baños y salida).

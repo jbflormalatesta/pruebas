@@ -50,8 +50,8 @@ window.RECORRIDOS = [
     ],
   },
   {
-    codigo: "descanso", nombre: "Recorrido accesible y de descanso", minutos: 30, modo: "tranquilo",
-    descripcion: "Por los senderos más anchos y con sombra, con bancos para descansar y cerca de los baños y del agua potable.",
+    codigo: "descanso", nombre: "Recorrido principal y de descanso", minutos: 30, modo: "tranquilo",
+    descripcion: "Por los senderos principales más anchos y planos, con bancos a la sombra y cercanía a los baños accesibles y canillas de agua potable.",
     paradas: [
       { lugar: "cartel-plano", texto: "Arrancá junto al portón de entrada, a unos 15 metros de los baños." },
       { lugar: "T-02", texto: "La plazoleta: bancos para descansar." },

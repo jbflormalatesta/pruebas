@@ -18,19 +18,19 @@
 window.MES_A_MES = {
 
   sectores: {
-    "S-01": { revisar: true, fuente: "Propuesta a partir de las fichas y del cartel del sector",
+    "S-01": { revisar: false, fuente: "Selección del equipo del Jardín (aprobada el 14/11/2026)",
       especies: ["A-71", "A-47", "A-72", "A-30", "A-53", "A-23", "A-68", "A-52"] },   // Tala, Molle incienso, Talilla, Espinillo, Ombú, Chal chal, Saúco, Ñapinday
     "S-02": { revisar: false, fuente: "Planilla de producción del vivero (Inventario Verde, noviembre de 2026)",
       especies: ["A-22", "A-14", "A-26", "A-30", "A-47", "A-53", "A-52", "A-69", "A-71", "A-72", "A-29", "A-75", "A-44", "H-63", "H-72", "H-80"] },   // Ceibo, Cambará, Cina cina, Espinillo, Molle incienso, Ombú, Ñapinday, Sen del campo, Tala, Talilla, Espina del bañado, Timbó, Malvavisco, Portulaca, Tasi, Santa Lucía blanca
-    "S-03": { revisar: true, fuente: "Propuesta a partir de las fichas",
+    "S-03": { revisar: false, fuente: "Selección del equipo del Jardín (aprobada el 14/11/2026)",
       especies: ["H-75", "H-59", "H-73"] },   // Tupinambur, Papa del aire, Tomatillo
-    "S-04": { revisar: true, fuente: "Propuesta a partir de las fichas",
+    "S-04": { revisar: false, fuente: "Selección del equipo del Jardín (aprobada el 14/11/2026)",
       especies: ["H-42", "H-74", "H-64", "H-03", "H-02", "H-24", "A-67", "A-22"] },   // Jacinto de agua, Totora, Redondita de agua, Achira amarilla, Achira, Cola de caballo, Sauce criollo, Ceibo
-    "S-05": { revisar: true, fuente: "Propuesta a partir de las fichas",
+    "S-05": { revisar: false, fuente: "Selección del equipo del Jardín (aprobada el 14/11/2026)",
       especies: ["A-21", "A-12", "A-66", "H-06", "H-20", "H-40", "H-50", "H-49", "H-44", "H-10", "H-13", "H-53", "H-25", "H-70"] },   // Cedrón de monte, Burrito, Salvia morada, Albahaca anís, Carqueja, Hierbabuena, Menta, Melisa, Lavanda, Artemisa, Boldo paraguayo, Milenrama, Consuelda, Santolina
     "S-06": { revisar: false, fuente: "",
       especies: [] },   // 
-    "P-01": { revisar: true, fuente: "Propuesta: nativas cuya ficha las presenta como alimento de orugas o de mariposas",
+    "P-01": { revisar: false, fuente: "Selección del equipo del Jardín (aprobada el 14/11/2026): nativas que alimentan orugas o mariposas",
       especies: ["H-60", "H-52", "H-23", "A-21", "A-14", "A-69", "H-17", "H-18"] },   // Pasionaria, Mil hombres, Chilca de olor, Cedrón de monte, Cambará, Sen del campo, Camará morado, Canario rojo
   },
 
