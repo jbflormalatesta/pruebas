@@ -330,3 +330,47 @@
   .ind-tabla-marco { overflow: visible; }
   .tarjeta, .ind-tabla { break-inside: avoid; }
 }
+
+/* paneles con ubicación proyectada (todavía no instalados) */
+.plano-svg .marca.panel.proyectado > rect { fill: var(--papel); stroke: var(--verde-profundo); stroke-width: .28; stroke-dasharray: .5 .32; }
+.plano-svg .marca.panel.proyectado .num { fill: var(--verde-profundo); }
+.plano-svg .marca.panel.proyectado.on > rect { stroke: var(--naranja); stroke-width: .5; }
+
+/* =====================  Etapa 3: modo relevamiento de árboles  ===================== */
+.plano-marco.relevando { box-shadow: 0 0 0 3px var(--naranja); }
+.plano-marco.relevando #arboles circle { cursor: pointer; }
+.plano-svg #arboles circle.censado { stroke: var(--tinta); stroke-width: .12; }
+.plano-svg #arboles circle.semillero { stroke-width: .2; }
+.plano-svg #arboles circle.abierto { r: .85; fill: var(--naranja); stroke: var(--tinta); stroke-width: .2; }
+.plano-svg #copas circle { fill: var(--verde-claro); fill-opacity: .22; stroke: var(--cientifico); stroke-width: .08; }
+.relevamiento { margin: 12px 0 0; padding: 14px; background: var(--papel); border: 2px solid var(--naranja); border-radius: var(--radio); }
+.relevamiento[hidden], .relevamiento [hidden] { display: none !important; }
+.relevamiento h3 { margin: 0 0 4px; }
+.rel-progreso { margin: 0 0 6px; color: var(--tinta-suave); }
+.rel-progreso b { color: var(--verde-profundo); }
+.barra-progreso { height: 10px; border-radius: 999px; background: var(--salvia); overflow: hidden; margin: 0 0 10px; }
+.barra-progreso span { display: block; height: 100%; width: 0; background: var(--verde); border-radius: 999px; }
+.rel-acciones { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 8px; }
+.rel-acciones .rel-color { display: inline-flex; gap: 6px; align-items: center; font-weight: 800; font-size: 14px; color: var(--verde-profundo); }
+.rel-acciones select, .rel-campos select, .rel-campos input, .rel-obs textarea { min-height: 42px; padding: 7px 9px; border: 1.5px solid var(--linea);
+  border-radius: 10px; background: #fff; color: var(--tinta); font-size: 15px; font-weight: 600; width: 100%; }
+.rel-acciones select { width: auto; }
+.rel-importar { cursor: pointer; }
+.rel-leyenda { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13.5px; font-weight: 700; color: var(--tinta-suave); }
+.rel-leyenda span { display: inline-flex; align-items: center; gap: 6px; }
+.rel-leyenda i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.rel-aviso { margin-top: 8px; font-weight: 700; color: var(--verde-profundo); }
+.rel-aviso:empty { display: none; }
+.rel-form { margin-top: 12px; padding-top: 12px; border-top: 1.5px solid var(--linea); }
+.rel-form h4 { margin: 0 0 10px; font-size: 18px; color: var(--verde-profundo); }
+.rel-form h4 small { font-size: 14px; color: var(--tinta-suave); font-weight: 700; margin-left: 6px; }
+.rel-campos { display: grid; gap: 10px; }
+@media (min-width: 640px) { .rel-campos { grid-template-columns: 1fr 1fr; } }
+.rel-campos label, .rel-obs { display: grid; gap: 4px; font-size: 13.5px; font-weight: 800; color: var(--verde-profundo); }
+.rel-campos small { font-weight: 600; color: var(--tinta-suave); font-size: 12.5px; }
+.rel-bds { margin: 12px 0; padding: 10px 12px; border: 1.5px solid var(--linea); border-radius: 12px; }
+.rel-bds legend { padding: 0 6px; font-weight: 800; color: var(--verde-profundo); }
+.rel-check { display: flex; gap: 8px; align-items: center; font-weight: 700; margin-bottom: 8px; }
+.rel-check input { width: 20px; height: 20px; accent-color: var(--verde); }
+.rel-guardado { margin: 8px 0 0; font-size: 14px; font-weight: 700; color: var(--cientifico); }
+@media print { .relevamiento { display: none !important; } }

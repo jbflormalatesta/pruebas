@@ -108,6 +108,9 @@
     if (k === 'cuadricula') {
       marco.classList.toggle('con-cuadricula', on);
       decir(on ? 'Tocá un lugar del plano para ver su columna y su fila.' : '');
+      var bRel = document.getElementById('modo-relevamiento');
+      if (bRel) bRel.hidden = !on;
+      if (!on && relevando) activarRelevamiento(false);
     } else {
       marco.classList.toggle('sin-' + k, !on);
     }
@@ -137,7 +140,7 @@
   lugares.forEach(function (l) {
     if (!ubicado(l) || l.en) return;
     var x = cx(l.col), y = cy(l.fila), capa = grupos[CAPA_DE[l.tipo] || 'sectores'];
-    var g = nodo('g', { 'class': 'marca ' + l.tipo, id: 'm-' + l.codigo, 'data-codigo': l.codigo, tabindex: '0',
+    var g = nodo('g', { 'class': 'marca ' + l.tipo + (l.proyectado ? ' proyectado' : ''), id: 'm-' + l.codigo, 'data-codigo': l.codigo, tabindex: '0',
       role: 'button', 'aria-label': descripcion(l) }, capa);
     nodo('title', {}, g).textContent = descripcion(l);
     var t = nodo('g', { 'data-recto': x + ' ' + y }, null);
@@ -382,6 +385,7 @@
     if (l && l.tipo === 'sector') partes.push('Cartel de sector (C1). Su QR abre el plano y marca «Estás acá» en el sector.');
     if (l && l.qr) partes.push('Cartel ' + esc(l.pieza || '') + ' · su QR: <span class="nw">jbflormalatesta.github.io/?' + esc(l.qr) + '</span>');
     if (l && l.tipo === 'lama') partes.push('Lamas direccionales (' + esc(l.pieza) + '), sin QR' + (l.en ? '.' : '.'));
+    if (l && l.proyectado) partes.push('Ubicación proyectada: el panel todavía no está instalado.');
     if (l && !ubicado(l) && !l.en) partes.push(l.tipo === 'panel' ? 'El panel todavía no está ubicado en el plano.' : 'Todavía no está ubicado en el plano.');
     return partes.length ? '<p class="info">' + partes.join(' ') + '</p>' : '';
   }
@@ -469,7 +473,7 @@
   function itemsTipo(f, sinUbicar) {
     return lugares.filter(f).map(function (l) {
       var u = ubicado(l) || (l.en && ubicado(porCodigo[l.en]));
-      return { v: l.codigo, t: nombreCorto(l) + (l.tipo === 'servicio' && l.icono === 'agua' && l.nota ? ' · ' + l.nota : '') + (u ? '' : ' (todavía sin ubicar)'), off: !u && !sinUbicar };
+      return { v: l.codigo, t: nombreCorto(l) + (l.tipo === 'servicio' && l.icono === 'agua' && l.nota ? ' · ' + l.nota : '') + (u ? (l.proyectado ? ' (ubicación proyectada)' : '') : ' (todavía sin ubicar)'), off: !u && !sinUbicar };
     });
   }
   if (cajaRuteo && red) {
@@ -605,6 +609,7 @@
     var u = ubicado(l) || (l.en && ubicado(porCodigo[l.en]));
     var sub = l.tipo === 'servicio' && l.icono === 'agua' ? l.nota : (l.nota || '');
     if (l.qr) sub = (sub ? sub + ' · ' : '') + 'QR ?' + l.qr;
+    if (l.proyectado) sub = (sub ? sub + ' · ' : '') + 'ubicación proyectada';
     if (!u) sub = (sub ? sub + ' · ' : '') + 'todavía sin ubicar';
     return '<li><button type="button" class="ref-boton" data-ref="' + esc(l.codigo) + '">' + swatch(l) + '<span>' + esc(l.tipo === 'servicio' && l.icono === 'agua' ? 'Agua potable' : l.nombre) +
       (sub ? '<small>' + esc(sub) + '</small>' : '') + '</span></button></li>';
@@ -649,6 +654,7 @@
       a.textContent = 'Ver en el plano';
       a.addEventListener('click', function (ev) { ev.preventDefault(); abrirPestana('plano'); tocar(c, true); mostrarPlano(puntoDe(c)); });
       p.appendChild(a);
+      if (porCodigo[c].proyectado) p.appendChild(document.createTextNode(' · ubicación proyectada: el panel todavía no está instalado.'));
     } else {
       p.textContent = porCodigo[c] && porCodigo[c].tipo === 'panel' ? 'Panel en preparación.' : 'Muy pronto, en el plano.';
     }
@@ -679,6 +685,10 @@
     var m = ev.target.closest && ev.target.closest('.marca, .banco');
     var dentro = q.x >= 0 && q.x <= COLS && q.y >= 0 && q.y <= FILAS;
     if (m && !(marco.classList.contains('con-cuadricula') && dentro)) { tocar(m.getAttribute('data-codigo')); return; }
+    if (relevando && dentro && window.Relevamiento) {
+      var ra = arbolCercano(q, 1.2);
+      if (ra) { window.Relevamiento.abrir(ra); return; }
+    }
     if (marco.classList.contains('con-cuadricula') && dentro) {      // herramienta técnica: columna y fila de cualquier punto
       var col = Math.floor(q.x) + 1, fila = FILAS - Math.floor(q.y), ar = arbolCercano(q, 0.9);
       var viejo = svg.querySelector('#toque');
@@ -899,7 +909,7 @@
           if (mesSel.some(function (m) { return f[m]; })) flor++;
           if (mesSel.some(function (m) { return r[m]; })) fruto++;
         });
-        caja.innerHTML = '<p class="sub">Para ver acá</p><p class="especies">' + lista.map(function (c) {
+        caja.innerHTML = '<p class="sub">Especies representativas del sector</p><p class="especies">' + lista.map(function (c) {
           return '<a href="../coleccion/?' + esc(c) + '">' + esc(E[c].nombre) + '</a>';
         }).join(', ') + '</p>' + ((flor || fruto) ? '<p class="mes-sector">En ' + esc(mesNombre) + ': ' + [flor ? flor + ' en flor' : '', fruto ? fruto + ' con frutos' : ''].filter(Boolean).join(' y ') + '.</p>' : '') +
           (S[s].revisar ? '<p class="revisar">Selección en revisión por el equipo del Jardín.</p>' : '');
@@ -914,6 +924,29 @@
     tocar(c, true);
     if (!ubicado(porCodigo[c])) { var t = document.getElementById(c); if (t) t.scrollIntoView({ block: 'center' }); }
   });
+
+  // ---------- modo relevamiento de árboles (cuadrícula técnica; código en plano/relevamiento.js) ----------
+  var relevando = false;
+  function activarRelevamiento(on) {
+    relevando = !!on;
+    var b = document.getElementById('modo-relevamiento'), caja = document.getElementById('relevamiento');
+    if (b) { b.setAttribute('aria-pressed', relevando ? 'true' : 'false'); b.textContent = relevando ? 'Salir del modo relevamiento' : 'Modo relevamiento de árboles'; }
+    marco.classList.toggle('relevando', relevando);
+    if (!relevando) { if (window.Relevamiento) window.Relevamiento.cerrar(); return; }
+    asegurarCapa('arboles');
+    decir('Modo relevamiento: tocá un árbol del plano para cargar sus datos.');
+    conEspecies(function () {
+      function listo() { if (relevando && window.Relevamiento && caja) window.Relevamiento.iniciar({ svg: svg, marco: marco, contenedor: caja, nodo: nodo, decir: decir, FILAS: FILAS }); }
+      if (window.Relevamiento) { listo(); return; }
+      var s = document.createElement('script');
+      s.src = 'relevamiento.js';
+      s.onload = listo;
+      s.onerror = function () { decir('No se pudo cargar el modo relevamiento. Probá de nuevo.'); };
+      document.head.appendChild(s);
+    });
+  }
+  var bRelev = document.getElementById('modo-relevamiento');
+  if (bRelev) bRelev.addEventListener('click', function () { activarRelevamiento(!relevando); });
 
   // ---------- herramientas: ampliar ----------
   var bAmp = $('#ampliar');
@@ -973,7 +1006,8 @@
     var pt = guardado.get('pestana', 'plano');
     if (pt !== 'plano') abrirPestana(pt);
   }
-  if (/[?&]cuadricula\b/.test(location.search)) aplicarCapa('cuadricula', true, false);
+  if (/[?&](cuadricula|relevamiento)\b/.test(location.search)) aplicarCapa('cuadricula', true, false);
+  if (/[?&]relevamiento\b/.test(location.search)) activarRelevamiento(true);
   window.addEventListener('hashchange', function () { segunDireccion(false); });
   setTimeout(pintarSectores, 300);
 })();
