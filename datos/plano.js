@@ -21,8 +21,29 @@
  * CARTELERÍA: «pieza» es el tipo de cartel (A1, A2, B1, B2, C1, C2) y «qr» el código que trae su QR
  * (jbflormalatesta.github.io/?plano, ?T-01…). Los carteles de sector (C1) llevan el QR de su sector.
  * Los recorridos sugeridos están en datos/recorridos.js; las especies de cada sector, en datos/mes-a-mes.js.
+ * Las medidas de los árboles para el modelo 3D están en datos/arboles.js.
  */
 window.PLANO = {
+
+  // NORTE DEL PLANO: cuántos grados hay que girar «arriba» del plano, en el sentido de las agujas del reloj,
+  //   para apuntar al norte. 45 = el norte apunta a la esquina de la Ruta 40 y la calle Gral. Bosch.
+  //   El equipo lo midió con Google Maps (entre 40 y 45); falta confirmarlo con brújula.
+  //   De este número dependen la flecha del norte del plano y el recorrido del sol en el modelo 3D.
+  norte: 45,
+
+  // MODELO 3D (pestaña «Modelo 3D y sol»): lo que no sale del relevamiento, que es en planta.
+  //   sitio:      latitud y longitud del Jardín (grados decimales) y diferencia con la hora universal (UTC−3).
+  //   estanque:   el espejo de agua no figura en el relevamiento. Va dibujado en forma APROXIMADA sobre la marca
+  //               del sector: col y fila del centro, largo y ancho en metros y giro en grados. null = no se dibuja.
+  //   sombraculo: col y fila de un punto que esté dentro del sombráculo; la estructura del relevamiento que lo
+  //               contiene se dibuja con postes y media sombra. null = no se dibuja como sombráculo.
+  //   alturas:    alto en metros de las construcciones. Son estimados: cambiarlos si se miden.
+  modelo3d: {
+    sitio: { lat: -34.80, lng: -58.85, utc: -3 },
+    estanque: { col: 41, fila: 38, largo: 7, ancho: 3, giro: 0 },                 // aproximado: falta confirmar lugar y tamaño
+    sombraculo: { col: 38.5, fila: 6.5 },                                         // a confirmar: estructura de 31 m² junto al invernadero chico
+    alturas: { edificioPrincipal: 3.6, edificacionGrande: 4.5, edificacionChica: 3, invernaderoGrande: 3, invernaderoChico: 2.6, sombraculo: 2.4 },
+  },
 
   lugares: [
     // SECTORES (carteles C1). En el plano llevan el número del código: S-01 → 1.
