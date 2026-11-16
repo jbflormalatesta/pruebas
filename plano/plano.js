@@ -235,6 +235,9 @@
     });
   }
 
+  // La flecha del norte sigue a datos/plano.js («norte»: grados desde «arriba» del plano, en sentido horario)
+  if (typeof P.norte === 'number') { var flecha = svg.querySelector('#entorno .norte path'); if (flecha) flecha.setAttribute('transform', 'rotate(' + P.norte + ')'); }
+
   // ---------- puntos y lugares ----------
   function arbolPos(id) { var c = svg.querySelector('#' + id); return c ? [+c.getAttribute('cx'), +c.getAttribute('cy')] : null; }
   function puntoDe(ref) {
@@ -305,7 +308,17 @@
   function minutos(m) { var n = Math.max(1, Math.round(m / 60)); return n === 1 ? '1 minuto' : n + ' minutos'; }
 
   // ---------- dibujo de caminos ----------
-  function limpiarRutas() { while (grupos.recorridos.firstChild) grupos.recorridos.removeChild(grupos.recorridos.firstChild); }
+  var rutaActiva = { tramos: [], paradas: [], nombre: '' }, t3d = null;      // lo que está dibujado, para verlo también en el modelo 3D
+  function datosRecorrido() { return { tramos: rutaActiva.tramos, paradas: rutaActiva.paradas, nombre: rutaActiva.nombre, partida: partida ? puntoDe(partida.ref) : null }; }
+  function avisar3d() {
+    if (!window.Modelo3D) return;
+    clearTimeout(t3d);
+    t3d = setTimeout(function () { window.Modelo3D.recorrido(datosRecorrido()); }, 40);
+  }
+  function limpiarRutas() {
+    while (grupos.recorridos.firstChild) grupos.recorridos.removeChild(grupos.recorridos.firstChild);
+    rutaActiva = { tramos: [], paradas: [], nombre: '' }; avisar3d();
+  }
   function trazo(pts) { return pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(2) + ',' + p[1].toFixed(2); }).join(''); }
   function dibujarRuta(r, clase) {
     var g = nodo('g', { 'class': 'ruta ' + (clase || '') }, grupos.recorridos);
@@ -315,6 +328,8 @@
     if (r.despues) tramos.push(['afuera', [r.puntos[r.puntos.length - 1]].concat(r.despues)]);
     tramos.forEach(function (t) { nodo('path', { 'class': 'casco ' + t[0], d: trazo(t[1]) }, g); });
     tramos.forEach(function (t) { nodo('path', { 'class': 'linea ' + t[0], d: trazo(t[1]) }, g); });
+    tramos.forEach(function (t) { rutaActiva.tramos.push({ puntos: t[1], afuera: t[0] === 'afuera' }); });
+    avisar3d();
     return g;
   }
   function finRuta(r) { return r.despues ? r.despues[r.despues.length - 1] : r.puntos[r.puntos.length - 1]; }
@@ -330,6 +345,7 @@
   function dibujarPartida() {
     var v = svg.querySelector('#partida-aqui');
     if (v) v.parentNode.removeChild(v);
+    avisar3d();
     if (!partida) return;
     var p = puntoDe(partida.ref);
     if (!p) return;
@@ -421,6 +437,7 @@
         limpiarRutas(); asegurarCapa('recorridos');
         dibujarRuta(r, 'simple');
         var f = finRuta(r); anillo(grupoAqui(), f[0], f[1]);
+        rutaActiva.paradas = [{ x: f[0], y: f[1], n: '', nombre: nombre }]; rutaActiva.nombre = 'hasta ' + nombre.charAt(0).toLowerCase() + nombre.slice(1);
         if (ref === 'agua-cercana') {
           var ag = lugares.filter(function (x) { return x.icono === 'agua' && ubicado(x); }).sort(function (a, b) {
             return Math.hypot(cx(a.col) - f[0], cy(a.fila) - f[1]) - Math.hypot(cx(b.col) - f[0], cy(b.fila) - f[1]); })[0];
@@ -559,6 +576,7 @@
         if (r) { dibujarRuta(r, 'circuito'); total += r.metros; tramo = '<span class="tramo">' + redondeo(r.metros) + ' m</span>'; }
       }
       ant = pa.lugar;
+      rutaActiva.paradas.push({ x: p[0], y: p[1], n: n, nombre: nombre });
       var g = nodo('g', { 'class': 'parada', 'data-recto': p[0] + ' ' + p[1] }, gNum);
       nodo('circle', { cx: p[0] + 1.6, cy: p[1] - 1.6, r: 1.15 }, g);      // al costado: no tapa el número del sector
       texto(String(n), { x: p[0] + 1.6, y: p[1] - 1.6 + 0.46 }, g);
@@ -567,6 +585,7 @@
     });
     grupos.recorridos.appendChild(gNum);
     enderezar(gNum);
+    rutaActiva.nombre = R.nombre; avisar3d();
     decir(R.nombre + ': unos ' + redondeo(total) + ' m a pie' + (R.minutos ? ', unos ' + R.minutos + ' minutos con las paradas' : '') + '.');
     detalle('<div class="circuito-detalle">' + (R.descripcion ? '<p>' + esc(R.descripcion) + '</p>' : '') +
       '<ol class="paradas-lista">' + items.join('') + '</ol>' +
@@ -741,7 +760,7 @@
   }
 
   // ---------- pestañas ----------
-  var PEST = { plano: ['tab-plano', 'vista-plano'], mes: ['tab-mes', 'mes-a-mes'], indicadores: ['tab-indicadores', 'indicadores'] };
+  var PEST = { plano: ['tab-plano', 'vista-plano'], '3d': ['tab-3d', 'modelo-3d'], mes: ['tab-mes', 'mes-a-mes'], indicadores: ['tab-indicadores', 'indicadores'] };
   var cajaPest = $('#pestanas'), pestana = 'plano';
   function abrirPestana(clave, foco, marcarHash) {
     if (!cajaPest || !PEST[clave]) return;
@@ -753,8 +772,9 @@
     }
     if (foco) document.getElementById(PEST[clave][0]).focus();
     if (clave === 'mes') pintarMes();
+    if (clave === '3d') abrirModelo(); else if (window.Modelo3D) window.Modelo3D.ocultar();
     if (marcarHash && history.replaceState) history.replaceState(null, '', clave === 'plano' ? location.pathname + location.search : '#' + PEST[clave][1]);
-    guardado.set('pestana', clave);
+    guardado.set('pestana', clave === '3d' ? 'plano' : clave);       // el modelo 3D no se reabre solo: pesa más que el resto
   }
   if (cajaPest) {
     cajaPest.hidden = false;
@@ -769,6 +789,28 @@
     });
     abrirPestana('plano');
   }
+  // ---------- modelo 3D y sol: se descarga recién al abrir la pestaña ----------
+  var modelo = 0;                                                     // 0 sin cargar · 1 cargando · 2 listo
+  function abrirModelo() {
+    if (modelo === 2) { window.Modelo3D.mostrar(); return; }
+    if (modelo === 1) return;
+    modelo = 1;
+    var cartel = document.getElementById('v3-cargando'), lista = ['vendor/suncalc.js', '../datos/arboles.js', 'vendor/three.min.js', 'vendor/OrbitControls.js', 'modelo3d.js'], i = 0;
+    if (cartel) { cartel.hidden = false; cartel.textContent = 'Cargando el modelo…'; }
+    (function seguir() {
+      if (i < lista.length) { var s = document.createElement('script'); s.src = lista[i++]; s.onload = s.onerror = seguir; document.head.appendChild(s); return; }
+      var listo = false;
+      try {
+        listo = !!(window.Modelo3D && window.SunCalc && window.Modelo3D.iniciar({ svg: svg, lugares: lugares, porCodigo: porCodigo, config: P.modelo3d || {}, norte: P.norte,
+          reservadas: RESERVADAS, recorrido: datosRecorrido, conEspecies: conEspecies, guardado: guardado }));
+      } catch (e) { listo = false; if (window.console) console.warn('Modelo 3D:', e); }
+      if (!listo) { modelo = 0; if (cartel) cartel.textContent = 'No se pudo cargar el modelo. Revisá la conexión y volvé a abrir esta pestaña.'; return; }
+      modelo = 2;
+      if (cartel) cartel.hidden = true;
+      if (pestana === '3d') window.Modelo3D.mostrar();
+    })();
+  }
+
   var bImp = $('#imprimir-ficha');
   if (bImp) { bImp.hidden = false; bImp.addEventListener('click', function () { window.print(); }); }
 
@@ -936,7 +978,7 @@
     asegurarCapa('arboles');
     decir('Modo relevamiento: tocá un árbol del plano para cargar sus datos.');
     conEspecies(function () {
-      function listo() { if (relevando && window.Relevamiento && caja) window.Relevamiento.iniciar({ svg: svg, marco: marco, contenedor: caja, nodo: nodo, decir: decir, FILAS: FILAS }); }
+      function listo() { if (relevando && window.Relevamiento && caja) window.Relevamiento.iniciar({ svg: svg, marco: marco, contenedor: caja, nodo: nodo, decir: decir, FILAS: FILAS, reservadas: RESERVADAS }); }
       if (window.Relevamiento) { listo(); return; }
       var s = document.createElement('script');
       s.src = 'relevamiento.js';
@@ -967,6 +1009,7 @@
     if (!h) return false;
     if (h === 'mes-a-mes') { abrirPestana('mes'); return true; }
     if (h === 'indicadores') { abrirPestana('indicadores'); return true; }
+    if (h === 'modelo-3d') { abrirPestana('3d'); return true; }
     if (h === 'vista-plano') { abrirPestana('plano'); return true; }
     var rc = /^recorrido-(.+)$/.exec(h);
     if (rc) { abrirPestana('plano'); elegirCircuito(rc[1], true); return true; }

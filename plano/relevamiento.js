@@ -24,7 +24,12 @@ window.Relevamiento = (function () {
     try { var v = JSON.parse(localStorage.getItem(CLAVE) || 'null'); if (v && v.arboles && typeof v.arboles === 'object') return v; } catch (e) {}
     return { formato: 'jb-relevamiento-arboles', version: 1, arboles: {} };
   }
-  function guardar() { try { localStorage.setItem(CLAVE, JSON.stringify(datos)); return true; } catch (e) { return false; } }
+  function guardar() {
+    var ok = true;
+    try { localStorage.setItem(CLAVE, JSON.stringify(datos)); } catch (e) { ok = false; }
+    try { document.dispatchEvent(new CustomEvent('jb:relevamiento')); } catch (e) {}      // el modelo 3D toma las medidas nuevas
+    return ok;
+  }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function $(s) { return caja.querySelector(s); }
   function hoy() { return new Date(Date.now() - 3 * 3600 * 1000).toISOString().slice(0, 10); }
@@ -63,6 +68,7 @@ window.Relevamiento = (function () {
       '<option value="bloque">Bloque</option><option value="sanitario">Estado sanitario</option><option value="bds">Semilleros BDS</option></select></label>' +
       '<button type="button" class="boton sec chico" id="rel-json">Exportar JSON</button>' +
       '<button type="button" class="boton sec chico" id="rel-csv">Exportar CSV</button>' +
+      '<button type="button" class="boton sec chico" id="rel-sitio">Exportar para el sitio</button>' +
       '<label class="boton sec chico rel-importar">Importar JSON<input type="file" id="rel-archivo" accept=".json,application/json" hidden></label></div>' +
       '<div class="rel-leyenda" id="rel-leyenda"></div><div class="rel-aviso" id="rel-aviso" aria-live="polite"></div></div>' +
       '<form class="rel-form" id="rel-form" hidden autocomplete="off"></form>';
@@ -70,6 +76,7 @@ window.Relevamiento = (function () {
     $('#rel-color').addEventListener('change', function () { color = this.value; pintar(); });
     $('#rel-json').addEventListener('click', exportarJSON);
     $('#rel-csv').addEventListener('click', exportarCSV);
+    $('#rel-sitio').addEventListener('click', exportarSitio);
     $('#rel-archivo').addEventListener('change', function () { if (this.files && this.files[0]) leerArchivo(this.files[0]); this.value = ''; });
     caja.addEventListener('click', function (ev) {
       var b = ev.target.closest && ev.target.closest('[data-rel]');
@@ -239,6 +246,24 @@ window.Relevamiento = (function () {
     });
     bajar('﻿' + filas.map(function (f) { return f.map(celda).join(';'); }).join('\r\n'), 'text/csv;charset=utf-8', nombreArchivo('csv'));
     aviso('Se descargó ' + nombreArchivo('csv') + ' (' + (filas.length - 1) + ' árboles). Se abre con Excel o con Hojas de cálculo de Google.');
+  }
+  // Para publicar en el sitio (datos/arboles.js): solo altura, copa y porte de cada árbol medido.
+  // No lleva especie, observaciones ni datos del BDS; las especies sensibles o amenazadas salen con porte genérico.
+  function exportarSitio() {
+    var porEspecie = {}, reservadas = ctx.reservadas || [], lineas = [], n = 0;
+    especies().forEach(function (e) { porEspecie[e.codigo] = e.porte; });
+    arboles().forEach(function (c) {
+      var r = datos.arboles[c.id];
+      if (!r || !(r.altura > 0 || r.copa > 0)) return;
+      var porte = r.especie && reservadas.indexOf(r.especie) < 0 && /^(arbusto|palmera|conífera)$/.test(porEspecie[r.especie] || '') ? porEspecie[r.especie] : 'árbol';
+      lineas.push('    "' + c.id + '": { ' + (r.altura > 0 ? 'altura: ' + r.altura + ', ' : '') + (r.copa > 0 ? 'copa: ' + r.copa + ', ' : '') + 'porte: "' + porte + '" },');
+      n++;
+    });
+    if (!n) { aviso('Todavía no hay árboles con altura o copa cargadas: no hay nada para publicar.'); return; }
+    bajar('/*\n * ÁRBOLES DEL JARDÍN CON MEDIDAS · para el modelo 3D del plano\n * Archivo generado con «Exportar para el sitio» del modo relevamiento. Se sube a la carpeta datos/ y reemplaza al anterior.\n' +
+      ' * Solo lleva altura (m), copa (diámetro, en m) y porte. No lleva especie, observaciones ni datos del Banco de Semillas.\n */\n' +
+      'window.ARBOLES = {\n  actualizado: "' + hoy() + '",\n  arboles: {\n' + lineas.join('\n') + '\n  },\n};\n', 'text/javascript', 'arboles.js');
+    aviso('Se descargó arboles.js con ' + n + (n === 1 ? ' árbol medido' : ' árboles medidos') + '. Subilo a la carpeta datos/ del sitio para que el modelo 3D los muestre a todos.');
   }
   function limpio(r) {
     var o = {};

@@ -374,3 +374,75 @@
 .rel-check input { width: 20px; height: 20px; accent-color: var(--verde); }
 .rel-guardado { margin: 8px 0 0; font-size: 14px; font-weight: 700; color: var(--cientifico); }
 @media print { .relevamiento { display: none !important; } }
+
+/* =====================  Etapa 2: modelo 3D y sol (plano/modelo3d.js)  ===================== */
+.v3 { display: grid; grid-template-columns: minmax(0, 1fr); border: 1.5px solid #E4E2CC; border-radius: var(--radio); overflow: hidden; background: var(--papel); }
+.v3 [hidden] { display: none !important; }
+.v3 .left { display: flex; flex-direction: column; min-width: 0; }
+.v3 .stage { position: relative; background: #E3EEEA; aspect-ratio: 16 / 10.5; min-height: 280px; overflow: hidden; }
+.v3 canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.v3 canvas:active { cursor: grabbing; }
+.v3 .poster, .v3 .snap { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.v3 .snap { display: none; object-fit: contain; }
+.v3 .lbls { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.v3 .lb { position: absolute; left: 0; top: 0; white-space: nowrap; will-change: transform; font: 800 12px/1.2 var(--fuente); color: var(--tinta);
+  background: rgba(255, 253, 246, .9); padding: 2px 8px; border-radius: 999px; }
+.v3 .lb.sec { background: var(--verde); color: #fff; font-size: 12.5px; }
+.v3 .lb.car { background: var(--verde-profundo); color: #fff; font-size: 11px; padding: 1px 7px; }
+.v3 .lb.pro { color: var(--verde-profundo); font-size: 11px; padding: 1px 7px; outline: 1.5px dashed var(--verde-profundo); outline-offset: -1.5px; }
+.v3 .lb.via, .v3 .lb.dom, .v3 .lb.hor, .v3 .lb.arc { background: transparent; padding: 0 2px;
+  text-shadow: 0 0 3px var(--papel), 0 0 3px var(--papel), 0 0 2px var(--papel), 0 1px 2px var(--papel); }
+.v3 .lb.via { color: var(--tinta-suave); font-size: 11.5px; letter-spacing: .03em; }
+.v3 .lb.dom { font: 400 17px/1 var(--fuente-titulo); color: var(--verde-profundo); }
+.v3 .lb.hor { font-size: 10.5px; color: var(--tinta-suave); }
+.v3 .lb.arc { font-size: 11px; }
+.v3 .lb.par { width: 23px; height: 23px; padding: 0; display: grid; place-items: center; border-radius: 50%; background: var(--papel); border: 2.5px solid var(--naranja); font-size: 12px; }
+.v3 .lb.aca { background: var(--verde-profundo); color: #fff; }
+.v3 .hud { position: absolute; left: 10px; top: 10px; max-width: calc(100% - 20px); background: rgba(51, 73, 10, .86); color: var(--crema); padding: 7px 11px; border-radius: 10px;
+  font: 700 13px/1.4 var(--fuente); pointer-events: none; }
+.v3 .hud b { color: #fff; font-weight: 800; }
+.v3 .aviso3d { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); margin: 0; width: max-content; max-width: calc(100% - 24px); background: rgba(255, 253, 246, .95);
+  color: var(--tinta); font-weight: 800; font-size: 14.5px; line-height: 1.35; padding: 8px 14px; border-radius: 12px; text-align: center; }
+.v3 .read { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1.5px solid #E4E2CC; }
+.v3 .read > div { padding: 10px 14px; box-shadow: 1px 0 0 var(--linea), 0 1px 0 var(--linea); }
+.v3 .read dt { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--verde); margin-bottom: 2px; }
+.v3 .read dd { margin: 0; font-size: 15px; font-weight: 700; color: var(--tinta); line-height: 1.35; }
+.v3 .panel { border-top: 1.5px solid #E4E2CC; padding: 14px; display: flex; flex-direction: column; gap: 16px; min-width: 0; font-size: 14.5px; }
+.v3 fieldset { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.v3 legend { padding: 0; margin-bottom: 6px; font-size: 12.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--verde-profundo); }
+.v3 .rng { display: grid; grid-template-columns: auto 1fr; gap: 2px 8px; align-items: baseline; }
+.v3 .rng label { font-weight: 700; color: var(--tinta-suave); }
+.v3 .rng output { font-weight: 800; color: var(--verde-profundo); text-align: right; }
+.v3 .rng input { grid-column: 1 / -1; width: 100%; min-height: 30px; accent-color: var(--verde); }
+.v3 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.v3 .chips button { appearance: none; min-height: 38px; padding: 6px 12px; border: 1.5px solid var(--linea); border-radius: 999px; background: var(--papel);
+  color: var(--tinta-suave); font: inherit; font-weight: 800; font-size: 14px; line-height: 1.15; cursor: pointer; }
+.v3 .chips button:hover { border-color: var(--verde); color: var(--verde-profundo); }
+.v3 .chips button[aria-pressed="true"] { background: var(--verde); border-color: var(--verde); color: #fff; }
+.v3 .chk { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; }
+.v3 .chk label { display: flex; align-items: center; gap: 7px; min-height: 32px; font-weight: 700; color: var(--tinta-suave); }
+.v3 .chk input { width: 18px; height: 18px; accent-color: var(--verde); }
+.v3 .panel .nota { margin: 0; font-size: 13.5px; }
+#modelo-3d > .nota { margin-top: 10px; }
+@media (min-width: 900px) {
+  .v3.listo { grid-template-columns: minmax(0, 1fr) 300px; }
+  .v3.listo .panel { border-top: 0; border-left: 1.5px solid #E4E2CC; }
+}
+@media (max-width: 899px) {
+  .v3 .stage { aspect-ratio: 4 / 3.4; }
+  .v3 .read { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) { .v3 .read { grid-template-columns: 1fr; } }
+@media print {
+  .v3.listo { grid-template-columns: 1fr 58mm; break-inside: avoid; }
+  .v3 canvas, .v3 .lbls, .v3 .aviso3d, .v3 .no-print, .v3 .stage:not(.sin-gl) .poster, .v3 .snap:not([src]) { display: none !important; }
+  .v3 .stage:not(.sin-gl) .snap[src] { display: block; position: static; height: auto; }
+  .v3 .stage { aspect-ratio: auto; min-height: 0; background: #fff !important; }
+  .v3 .stage.sin-gl .poster { position: static; height: auto; }
+  .v3 .hud { position: static; background: none; color: #000; padding: 4px 0; max-width: none; }
+  .v3 .hud b { color: #000; }
+  .v3 .panel { border-left: 1px solid #999; }
+}
+.v3 .lb.breve { width: 22px; height: 22px; padding: 0; display: grid; place-items: center; border-radius: 50%; }
+@media (max-width: 899px) { .v3 .hud { font-size: 12px; padding: 5px 9px; left: 8px; top: 8px; } }
+.v3 .lb.par.fin { width: 18px; height: 18px; background: var(--naranja); border: 3px solid var(--papel); box-shadow: 0 0 0 1.5px var(--tinta); }

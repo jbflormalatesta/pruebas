@@ -46,6 +46,7 @@
 
     <div class="pestanas" id="pestanas" role="tablist" aria-label="Secciones del plano" hidden>
       <button type="button" role="tab" id="tab-plano" aria-controls="vista-plano" aria-selected="true">Plano y recorridos</button>
+      <button type="button" role="tab" id="tab-3d" aria-controls="modelo-3d" aria-selected="false" tabindex="-1">Modelo 3D y sol</button>
       <button type="button" role="tab" id="tab-mes" aria-controls="mes-a-mes" aria-selected="false" tabindex="-1">El Jardín mes a mes</button>
       <button type="button" role="tab" id="tab-indicadores" aria-controls="indicadores" aria-selected="false" tabindex="-1">Indicadores y superficies</button>
     </div>
@@ -183,6 +184,51 @@
         </div>
       </section>
     </div>
+
+    <section class="vista seccion" id="modelo-3d" role="tabpanel" aria-labelledby="tab-3d">
+      <h2 id="titulo-3d">Modelo 3D y sol</h2>
+      <p class="texto">El Jardín a escala, con el sol real de Marcos Paz. Mové el mes y la hora para ver por dónde pasa el sol y adónde caen las sombras. Para girar el modelo, arrastralo; para acercarlo, usá la rueda o dos dedos.</p>
+      <div class="v3" id="v3">
+        <div class="left">
+          <div class="stage" id="v3-stage">
+            <img class="poster" id="v3-poster" src="modelo3d.jpg" width="1200" height="788" loading="lazy" alt="Vista aérea del modelo 3D del Jardín, con las sombras del 21 de marzo a las 13 h">
+            <canvas id="v3-canvas" aria-label="Modelo 3D del Jardín con las sombras del sol" hidden></canvas>
+            <div class="lbls" id="v3-labels" aria-hidden="true"></div>
+            <div class="hud" id="v3-hud" hidden></div>
+            <p class="aviso3d" id="v3-cargando" hidden>Cargando el modelo…</p>
+            <p class="aviso3d" id="v3-nogl" hidden>Este dispositivo no pudo abrir el modelo 3D. Los datos del sol de acá abajo funcionan igual.</p>
+          </div>
+          <dl class="read" id="v3-read" hidden>
+            <div><dt>Sol</dt><dd id="rd-sol"></dd></div>
+            <div><dt>Salida y puesta</dt><dd id="rd-horas"></dd></div>
+            <div><dt>Sombra de un poste de 1 m</dt><dd id="rd-poste"></dd></div>
+            <div><dt>Huerta (S-03)</dt><dd id="rd-huerta"></dd></div>
+            <div><dt>Invernaderos (S-02)</dt><dd id="rd-inv"></dd></div>
+            <div><dt>Bancos y descanso</dt><dd id="rd-bancos"></dd></div>
+          </dl>
+        </div>
+        <div class="panel" id="v3-panel" hidden>
+          <fieldset>
+            <legend>Fecha y hora</legend>
+            <div class="rng"><label for="v3-mes">Día 21 de</label><output id="v3-mes-txt" for="v3-mes"></output><input type="range" id="v3-mes" min="1" max="12" step="1" value="3"></div>
+            <div class="chips no-print" id="v3-fechas"><button type="button" data-m="12">21 dic</button><button type="button" data-m="3">21 mar</button><button type="button" data-m="6">21 jun</button><button type="button" data-m="9">21 sep</button></div>
+            <div class="rng"><label for="v3-hora">Hora oficial</label><output id="v3-hora-txt" for="v3-hora"></output><input type="range" id="v3-hora" min="7" max="20" step="0.25" value="13"></div>
+            <div class="chips no-print"><button type="button" id="v3-recorrer" aria-pressed="false">Recorrer el día</button></div>
+          </fieldset>
+          <fieldset class="no-print" id="v3-fs-vistas">
+            <legend>Vistas</legend>
+            <div class="chips" id="v3-vistas"><button type="button" data-vista="aerea">Aérea general</button><button type="button" data-vista="planta">Planta</button><button type="button" data-vista="ingreso">Ingreso (A2 / T-01)</button><button type="button" data-vista="plazoleta">Plazoleta (T-02 / P-02)</button><button type="button" data-vista="talar">Talar (S-01)</button><button type="button" data-vista="vivero">Vivero y Huerta (S-02 / S-03)</button><button type="button" data-vista="estanque">Estanque (S-04)</button></div>
+          </fieldset>
+          <fieldset class="no-print" id="v3-fs-capas">
+            <legend>Capas</legend>
+            <div class="chk" id="v3-capas"><label><input type="checkbox" data-capa3d="arboles" checked> Árboles</label><label><input type="checkbox" data-capa3d="boveda" checked> Bóveda solar</label><label><input type="checkbox" data-capa3d="etiquetas" checked> Etiquetas</label><label><input type="checkbox" data-capa3d="recorrido" checked> Recorrido activo</label></div>
+            <p class="nota" id="v3-nota-recorrido"></p>
+          </fieldset>
+        </div>
+      </div>
+      <p class="nota" id="v3-nota-arboles"></p>
+      <p class="nota">El sol está calculado para el día 21 de cada mes, en hora oficial argentina; el mediodía solar cae cerca de las 13 h. En la bóveda, el arco naranja es el del 21 de diciembre; el verde, el de los equinoccios; y el azul, el del 21 de junio. Las líneas finas marcan dónde está el sol a cada hora a lo largo del año. Las sombras son una estimación: el relevamiento es en planta, así que las alturas de las construcciones y de los árboles que todavía no se midieron son aproximadas, igual que la orientación del norte. Para ver el modelo hace falta JavaScript.</p>
+    </section>
 
     <section class="vista seccion" id="mes-a-mes" role="tabpanel" aria-labelledby="tab-mes">
       <h2 id="titulo-mes">El Jardín mes a mes</h2>
