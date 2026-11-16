@@ -20,6 +20,8 @@ repositorio es exactamente lo que se publica.
 | Decidir adónde lleva el QR de las fichas A5 | `datos/sitio.js` | `qrFichas`: `"ficha"` o `"linktree"` |
 | Ubicar un sector, un servicio, un cartel o un ejemplar en el plano | `datos/plano.js` | `col` y `fila` (las instrucciones están al principio del archivo). Cuando se instalen los paneles P-01 y P-02, cargar acá su lugar: los recorridos los incluyen solos |
 | Relevar los árboles del plano (especie, DAP, BDS, estado sanitario) | el plano con `?relevamiento` al final de la dirección | los datos quedan solo en ese navegador: exportar JSON o CSV seguido e importar para juntar lo de varias personas |
+| Que el modelo 3D muestre los árboles con su altura y su copa reales | `datos/arboles.js` | en el modo relevamiento, «Exportar para el sitio» descarga `arboles.js`; se sube a `datos/` y reemplaza al anterior (no lleva especies ni observaciones) |
+| Ajustar el modelo 3D (norte, estanque, sombráculo, alturas de las construcciones) | `datos/plano.js` | `norte` y `modelo3d` (las instrucciones están en el mismo archivo) |
 | Activar el conteo anónimo de visitas | `datos/sitio.js` | `visitas: { activo: true }`, después de instalar el complemento «Visitas» en la aplicación de la agenda (instructivo en el proyecto) |
 | Cambiar un recorrido sugerido del plano (paradas, textos, minutos) | `datos/recorridos.js` | la lista `paradas` de cada recorrido, con los códigos de `datos/plano.js` |
 | Corregir qué especies se ven en cada sector o cuándo florecen | `datos/mes-a-mes.js` | `sectores` (y pasar `revisar` a `false` cuando el equipo valide) y `especies` (meses de flor y frutos) |
@@ -40,14 +42,16 @@ Los cambios se ven en el sitio en uno a diez minutos.
 ```
 index.html            Portada (y enrutador de los QR impresos)
 visita/               Visitá el Jardín: horarios, cómo llegar, servicios, pautas, visitas guiadas
-plano/                Plano del Jardín: capas, recorridos a pie, mes a mes e indicadores (plano.js, plano.css, ruteo.js y senderos.js; senderos.js se genera con herramientas/senderos.py y no se edita a mano)
+plano/                Plano del Jardín: capas, recorridos a pie, modelo 3D con el sol, mes a mes e indicadores (plano.js, plano.css, ruteo.js y senderos.js; senderos.js se genera con herramientas/senderos.py y no se edita a mano)
+plano/modelo3d.js     Modelo 3D y sol: se descarga recién al abrir esa pestaña. modelo3d.jpg es la vista fija (sin JavaScript o sin WebGL)
+plano/vendor/         Bibliotecas del modelo 3D guardadas en el sitio: three.js r128, OrbitControls y SunCalc (licencias en LICENCIAS.txt)
 coleccion/            La colección: listado y fichas (coleccion.js, coleccion.css)
 agenda/               Agenda: actividades abiertas, del calendario «JB - Público» (comun/agenda.js)
 centinelas/           Programa Centinelas de Nativas
 recursos/             Recursos para descargar (recursos.js); los archivos van en recursos/archivos/
 el-jardin/            El Jardín: historia, misión, institucional, contacto
 comun/                sitio.css (estilos y paleta), sitio.js (aviso, horarios, enlaces) y agenda.js
-datos/                sitio.js, especies.js, direcciones.js, plano.js, recorridos.js, mes-a-mes.js y recursos.js
+datos/                sitio.js, especies.js, direcciones.js, plano.js, recorridos.js, mes-a-mes.js, arboles.js y recursos.js
 img/                  logos, íconos e imagen para compartir
 fotos/sitio/          fotos de las páginas
 fotos/especies/       fotos de las cuatro estaciones

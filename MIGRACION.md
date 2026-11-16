@@ -16,6 +16,10 @@ Contacto: ecologiaurbana@marcospaz.gov.ar · jardinbotanicommp@gmail.com
 - **Peso:** unos 500 KB sin fotos. La página más pesada es la colección (unos 200 KB de datos).
 - **Dependencias externas:** Google Fonts (Chelsea Market y Nunito Sans; si se prefiere, se pueden
   alojar en el servidor) y enlaces a Google Forms (los formularios no se alojan en el sitio).
+  El modelo 3D del plano no depende de nadie: sus bibliotecas (three.js r128, OrbitControls y SunCalc)
+  están en `plano/vendor/`, con sus licencias en `plano/vendor/LICENCIAS.txt`. Usa WebGL del
+  navegador; si hay una política de seguridad de contenidos (CSP), alcanza con `script-src 'self'`
+  y con permitir imágenes `data:` en `img-src` (la captura para imprimir).
 - **Datos personales:** el sitio no recibe ni guarda datos de nadie. No usa cookies ni analítica.
 
 ## 2. Requisitos del servidor
