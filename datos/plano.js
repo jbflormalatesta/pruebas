@@ -22,6 +22,8 @@
  * (jbflormalatesta.github.io/?plano, ?T-01…). Los carteles de sector (C1) llevan el QR de su sector.
  * Los recorridos sugeridos están en datos/recorridos.js; las especies de cada sector, en datos/mes-a-mes.js.
  * Las medidas de los árboles para el modelo 3D están en datos/arboles.js.
+ * RÓTULOS: «rotuloLado» ("izq" o "der") dice de qué lado de la marca va el texto; «rotuloLadoIngreso», si hace falta
+ * otro lado en la «Vista desde el ingreso» (por ejemplo, para que no se corte contra el borde).
  */
 window.PLANO = {
 
@@ -101,7 +103,7 @@ window.PLANO = {
     // TRANSPORTE (afuera del alambrado, hacia la Ruta 40)
     { codigo: "parada", tipo: "parada", nombre: "Parada de colectivos 322 y 136", nota: "Techada, con dos asientos, en la vereda de la Ruta 40", col: 43.5, fila: 73.8 },
     { codigo: "paso-nivel", tipo: "cruce", nombre: "Paso a nivel de Ruta 40 y Gral. Bosch", nota: "Para cruzar las vías y la ruta desde la bicisenda",
-      rotulo: "Paso a nivel", rotuloLado: "izq", col: 59.5, fila: 77.7 },
+      rotulo: "Paso a nivel", rotuloLado: "izq", rotuloLadoIngreso: "der", col: 59.5, fila: 77.7 },
   ],
 
   // EJEMPLARES DE LA COLECCIÓN EN EL PLANO (para «Dónde está» en la ficha de cada especie)
