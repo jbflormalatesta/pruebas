@@ -446,3 +446,8 @@
 .v3 .lb.breve { width: 22px; height: 22px; padding: 0; display: grid; place-items: center; border-radius: 50%; }
 @media (max-width: 899px) { .v3 .hud { font-size: 12px; padding: 5px 9px; left: 8px; top: 8px; } }
 .v3 .lb.par.fin { width: 18px; height: 18px; background: var(--naranja); border: 3px solid var(--papel); box-shadow: 0 0 0 1.5px var(--tinta); }
+
+/* Rótulos que cambian de lugar con la orientación (vista general / vista desde el ingreso) */
+.plano-svg .solo-ingreso { display: none; }
+.girado .plano-svg .solo-ingreso { display: inline; }
+.girado .plano-svg .solo-general { display: none; }

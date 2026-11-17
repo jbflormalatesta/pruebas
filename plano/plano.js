@@ -181,11 +181,16 @@
     }
     if (t.childNodes.length) g.appendChild(t);
     if (l.rotulo) {
+      // «rotuloLadoIngreso»: otro lado para la vista desde el ingreso (se muestra uno u otro según la orientación)
       var lineas = [].concat(l.rotulo), izq = l.rotuloLado ? l.rotuloLado === 'izq' : l.col <= 0;
-      var gr = nodo('g', { 'data-recto': x + ' ' + y }, g);
-      lineas.forEach(function (tx, k) {
-        texto(tx, { x: izq ? x - 1.7 : x + 1.7, y: y + 0.45 + (k - (lineas.length - 1) / 2) * 1.35,
-          'class': 'rotulo' + (izq ? ' izq' : '') + (l.tipo === 'cruce' ? ' claro' : '') }, gr);
+      var izqIng = l.rotuloLadoIngreso ? l.rotuloLadoIngreso === 'izq' : izq;
+      (izqIng === izq ? [[izq, '']] : [[izq, 'solo-general'], [izqIng, 'solo-ingreso']]).forEach(function (ld) {
+        var atr = { 'data-recto': x + ' ' + y }; if (ld[1]) atr['class'] = ld[1];
+        var gr = nodo('g', atr, g);
+        lineas.forEach(function (tx, k) {
+          texto(tx, { x: ld[0] ? x - 1.7 : x + 1.7, y: y + 0.45 + (k - (lineas.length - 1) / 2) * 1.35,
+            'class': 'rotulo' + (ld[0] ? ' izq' : '') + (l.tipo === 'cruce' && ld[1] !== 'solo-ingreso' ? ' claro' : '') }, gr);
+        });
       });
     }
   });
