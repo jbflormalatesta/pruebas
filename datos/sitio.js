@@ -57,11 +57,12 @@ window.SITIO = {
     datos: "https://script.google.com/macros/s/AKfycbxhEOVtyJM3zJzGGdMlyJdzHRI_4CSHm9MW_aYUBikQ23WytndZnZPUp0m-0KphnCxC/exec",   // aplicación 2026-11_Script_AgendaWebJB (cuenta del Jardín)
   },
 
-  // CONTEO ANÓNIMO DE VISITAS (apagado hasta instalar el complemento «Visitas» en la aplicación de la agenda)
-  //   Con activo: true, cada página avisa qué sección se abrió y, si se llegó por un QR, qué código.
+  // CONTEO ANÓNIMO DE VISITAS (encendido desde el 17/11/2026; lo recibe el complemento «Visitas» de la aplicación de
+  //   la agenda y lo anota en la planilla «2026-11_Registro_VisitasWebJB» de la cuenta del Jardín).
+  //   Cada página avisa qué sección se abrió y, si se llegó por un QR, qué código.
   //   No usa cookies ni guarda datos personales (ni IP, ni dispositivo, ni hora: solo la fecha).
-  //   url: vacía = usa la misma dirección que la agenda.
-  visitas: { activo: false, url: "" },
+  //   Para apagarlo: activo: false. url: vacía = usa la misma dirección que la agenda.
+  visitas: { activo: true, url: "" },
 
   // A dónde lleva el QR impreso en las fichas A5 (D2) de la colección:
   //   "ficha"    = la página de la especie (igual que las etiquetas)
