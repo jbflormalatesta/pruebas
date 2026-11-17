@@ -1,7 +1,7 @@
 /*
  * Plano del Jardín
  * ----------------
- * Capas, referencias que se tocan en el plano o en la lista, orientación (norte arriba o vista desde el
+ * Capas, referencias que se tocan en el plano o en la lista, orientación (vista general o vista desde el
  * ingreso), «Estás acá», caminos a pie por los senderos, recorridos sugeridos, «El Jardín mes a mes» y la
  * ficha de indicadores. Datos que edita el Jardín: datos/plano.js (lugares), datos/recorridos.js y
  * datos/mes-a-mes.js. La red de senderos (plano/senderos.js) sale del relevamiento y no se edita a mano.
@@ -197,7 +197,7 @@
     nodo('circle', { cx: b[0], cy: b[1], r: 0.62 }, g);
   });
 
-  // ---------- orientación: norte arriba o vista desde el ingreso (como el cartel A2) ----------
+  // ---------- orientación: vista general (la del relevamiento; la flecha marca el norte) o vista desde el ingreso (como el cartel A2) ----------
   var orientacion = 'norte';
   function enderezar(raiz) {
     if (!raiz || !raiz.querySelectorAll) return;
@@ -230,7 +230,7 @@
     $$('[data-orientacion]', cajaOri).forEach(function (b) {
       b.addEventListener('click', function () {
         orientar(b.getAttribute('data-orientacion'), true);
-        decir(orientacion === 'ingreso' ? 'Vista desde el ingreso: como en el cartel con el plano, lo que tenés adelante queda arriba y la Ruta 40, a la izquierda.' : 'Norte arriba: la orientación general del plano.');
+        decir(orientacion === 'ingreso' ? 'Vista desde el ingreso: como en el cartel con el plano, lo que tenés adelante queda arriba y la Ruta 40, a la izquierda.' : 'Vista general: la orientación del relevamiento. El norte apunta a la esquina de la Ruta 40 y la calle Gral. Bosch, como marca la flecha.');
       });
     });
   }
